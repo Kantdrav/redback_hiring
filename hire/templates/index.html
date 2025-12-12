@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Redback{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Redback</h1>
+        <p class="lead">Streamline your hiring process with AI-powered interview management</p>
+        <hr class="my-4">
+        <p>Redback helps you manage candidates, schedule interviews, and conduct assessments efficiently.</p>
+        <div class="mt-4">
+            {% if current_user and current_user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{{ url_for('jobs.list_jobs') }}" role="button">View Jobs</a>
+                <a class="btn btn-secondary btn-lg" href="{{ url_for('interviews.interviewer_dashboard') }}" role="button">Interviews</a>
+            {% else %}
+                <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}" role="button">Login</a>
+                <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.register') }}" role="button">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Job Management</h5>
+                    <p class="card-text">Create and manage job postings efficiently.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Smart Scheduling</h5>
+                    <p class="card-text">Schedule interviews with conflict detection.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">AI-Powered Resume Analysis</h5>
+                    <p class="card-text">Analyze resumes with RAG technology.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

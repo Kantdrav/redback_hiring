@@ -1,0 +1,120 @@
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+import json
+
+db = SQLAlchemy()
+
+class User(db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(180), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String(120))
+    role = db.Column(db.String(30), default="candidate")  # admin, hr, interviewer, candidate
+    phone = db.Column(db.String(30))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def set_password(self, raw):
+        self.password_hash = generate_password_hash(raw)
+
+    def check_password(self, raw):
+        return check_password_hash(self.password_hash, raw)
+
+class Job(db.Model):
+    __tablename__ = "jobs"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    dept = db.Column(db.String(100))
+    location = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    status = db.Column(db.String(30), default="open")  # open/closed
+    created_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Candidate(db.Model):
+    __tablename__ = "candidates"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    name = db.Column(db.String(200))
+    email = db.Column(db.String(200), nullable=False)
+    phone = db.Column(db.String(30))
+    resume_path = db.Column(db.String(500))
+    applied_job_id = db.Column(db.Integer, db.ForeignKey("jobs.id"))
+    status = db.Column(db.String(50), default="applied")
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class AuditLog(db.Model):
+    __tablename__ = "audit_logs"
+    id = db.Column(db.Integer, primary_key=True)
+    entity_type = db.Column(db.String(50))
+    entity_id = db.Column(db.Integer)
+    action = db.Column(db.String(100))
+    user_id = db.Column(db.Integer)
+    payload_json = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Phase 2 Models
+class Round(db.Model):
+    __tablename__ = "rounds"
+    id = db.Column(db.Integer, primary_key=True)
+    plan_id = db.Column(db.Integer, nullable=True)  # in future: FK to interview_plans
+    order_index = db.Column(db.Integer, default=0)
+    name = db.Column(db.String(200))
+    type = db.Column(db.String(50))  # hr, technical, mcq, coding, live
+    duration_minutes = db.Column(db.Integer, default=30)
+    config_json = db.Column(db.Text, default='{}')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def get_config(self):
+        try:
+            return json.loads(self.config_json or "{}")
+        except Exception:
+            return {}
+
+class Interview(db.Model):
+    __tablename__ = "interviews"
+    id = db.Column(db.Integer, primary_key=True)
+    round_id = db.Column(db.Integer, db.ForeignKey("rounds.id"))
+    candidate_id = db.Column(db.Integer, db.ForeignKey("candidates.id"))
+    interviewer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    scheduled_at_utc = db.Column(db.DateTime, nullable=True)
+    duration = db.Column(db.Integer, default=30)  # minutes
+    status = db.Column(db.String(50), default="scheduled")  # scheduled, completed, cancelled
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # convenience relationships
+    round = db.relationship("Round", backref="interviews", lazy=True)
+
+class Assessment(db.Model):
+    __tablename__ = "assessments"
+    id = db.Column(db.Integer, primary_key=True)
+    interview_id = db.Column(db.Integer, db.ForeignKey("interviews.id"))
+    score_numeric = db.Column(db.Float, nullable=True)
+    score_json = db.Column(db.Text)  # detailed rubric or MCQ result
+    feedback_text = db.Column(db.Text)
+    submitted_by = db.Column(db.Integer, db.ForeignKey("users.id"))
+    submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def get_score_json(self):
+        try:
+            return json.loads(self.score_json or "{}")
+        except Exception:
+            return {}
+
+class MCQQuestion(db.Model):
+    __tablename__ = "mcq_questions"
+    id = db.Column(db.Integer, primary_key=True)
+    round_id = db.Column(db.Integer, db.ForeignKey("rounds.id"))
+    question_text = db.Column(db.Text)
+    choices_json = db.Column(db.Text)   # JSON list of choices
+    correct_index = db.Column(db.Integer) # index into choices_json
+    marks = db.Column(db.Float, default=1.0)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def get_choices(self):
+        try:
+            return json.loads(self.choices_json or "[]")
+        except Exception:
+            return []

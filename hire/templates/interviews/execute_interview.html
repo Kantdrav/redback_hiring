@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Interview — {{ interview.id }}</h3>
+<p><strong>Candidate:</strong> {{ interview.candidate_id }}</p>
+<p><strong>Round:</strong> {{ interview.round.name if interview.round else '' }}</p>
+
+{% if mcq_questions %}
+  <h4>MCQ Questions (round: {{ interview.round.name }})</h4>
+  <a class="btn btn-sm btn-outline-primary" href="{{ url_for('interviews.mcq_take', round_id=interview.round.id) }}">Open MCQ Test</a>
+{% endif %}
+
+<form method="post">
+  <div class="mb-3">
+    <label>Numeric Score</label>
+    <input name="score_numeric" class="form-control" />
+  </div>
+  <div class="mb-3">
+    <label>Score JSON (optional)</label>
+    <textarea name="score_json" class="form-control" rows="4">{}</textarea>
+  </div>
+  <div class="mb-3">
+    <label>Feedback</label>
+    <textarea name="feedback" class="form-control" rows="6"></textarea>
+  </div>
+  <button class="btn btn-success">Submit Assessment</button>
+</form>
+{% endblock %}

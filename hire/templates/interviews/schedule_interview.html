@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Schedule Interview</h3>
+<form method="post">
+  <div class="mb-3">
+    <label>Round</label>
+    <select name="round_id" class="form-select">
+      {% for r in rounds %}
+      <option value="{{ r.id }}">{{ r.name }} ({{ r.type }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label>Candidate</label>
+    <select name="candidate_id" class="form-select">
+      {% for c in candidates %}
+      <option value="{{ c.id }}">{{ c.name }} — {{ c.email }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label>Interviewer</label>
+    <select name="interviewer_id" class="form-select">
+      {% for i in interviewers %}
+      <option value="{{ i.id }}">{{ i.name or i.email }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3">
+    <label>Scheduled At (ISO 8601, UTC)</label>
+    <input name="scheduled_at" class="form-control" value="{{ "" }}">
+  </div>
+  <div class="mb-3">
+    <label>Duration (minutes)</label>
+    <input name="duration" class="form-control" value="30">
+  </div>
+  <button class="btn btn-primary">Schedule</button>
+</form>
+{% endblock %}

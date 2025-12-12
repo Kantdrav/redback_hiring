@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Interview Rounds</h3>
+<a href="{{ url_for('interviews.create_round') }}" class="btn btn-primary mb-3">Create Round</a>
+<table class="table">
+  <thead><tr><th>#</th><th>Name</th><th>Type</th><th>Duration</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for r in rounds %}
+    <tr>
+      <td>{{ r.order_index }}</td>
+      <td>{{ r.name }}</td>
+      <td>{{ r.type }}</td>
+      <td>{{ r.duration_minutes }} min</td>
+      <td>
+        <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('interviews.schedule') }}">Schedule</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5">No rounds created yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

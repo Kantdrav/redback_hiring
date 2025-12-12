@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resume - InterviewFlow{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Upload Resume</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" action="{{ url_for('rag.upload_resume') }}">
+                        <div class="form-group mb-3">
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ current_user.name if current_user.is_authenticated else '' }}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email if current_user.is_authenticated else '' }}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone">Phone (Optional)</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" value="{{ current_user.phone if current_user.is_authenticated else '' }}">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="resume">Select Resume (PDF)</label>
+                            <input type="file" class="form-control" id="resume" name="resume" accept=".pdf" required>
+                            <small class="form-text text-muted">Maximum file size: 8 MB</small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="job_id">Target Job (Optional)</label>
+                            <select class="form-control" id="job_id" name="job_id">
+                                <option value="">-- Select a job --</option>
+                                {% for job in jobs %}
+                                    <option value="{{ job.id }}">{{ job.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload Resume</button>
+                        <a href="{{ url_for('jobs.list_jobs') }}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+            {% if analysis_result %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4>Analysis Results</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Match Score: {{ analysis_result.match_score }}%</h5>
+                    <p>{{ analysis_result.summary }}</p>
+                    {% if analysis_result.strengths %}
+                    <h6>Strengths:</h6>
+                    <ul>
+                        {% for strength in analysis_result.strengths %}
+                            <li>{{ strength }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if analysis_result.gaps %}
+                    <h6>Skill Gaps:</h6>
+                    <ul>
+                        {% for gap in analysis_result.gaps %}
+                            <li>{{ gap }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}User Management - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h2><i class="fas fa-users"></i> User Management</h2>
+    </div>
+    <div class="col-md-4 text-end">
+      <a href="{{ url_for('admin_users.create_user') }}" class="btn btn-success">
+        <i class="fas fa-plus"></i> Create User
+      </a>
+    </div>
+  </div>
+
+  <div class="alert alert-info" role="alert">
+    <i class="fas fa-info-circle"></i> 
+    <strong>Registration Policy:</strong> HR accounts can only be created here by admins. Candidates and Interviewers can self-register.
+  </div>
+
+  {% if users %}
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Created</th>
+          <th style="width: 180px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td><strong>{{ u.email }}</strong></td>
+          <td>{{ u.name or '-' }}</td>
+          <td>
+            {% if u.role == 'admin' %}
+              <span class="badge bg-danger">Admin</span>
+            {% elif u.role == 'hr' %}
+              <span class="badge bg-success">HR</span>
+            {% elif u.role == 'interviewer' %}
+              <span class="badge bg-warning text-dark">Interviewer</span>
+            {% else %}
+              <span class="badge bg-secondary">Candidate</span>
+            {% endif %}
+          </td>
+          <td>{{ u.created_at.strftime('%Y-%m-%d') if u.created_at else '-' }}</td>
+          <td>
+            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('admin_users.edit_user', user_id=u.id) }}">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <form method="post" action="{{ url_for('admin_users.delete_user', user_id=u.id) }}" style="display:inline;" onsubmit="return confirm('Delete this user?');">
+              <button class="btn btn-sm btn-outline-danger">
+                <i class="fas fa-trash"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-warning">
+    <i class="fas fa-exclamation-triangle"></i> No users found.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

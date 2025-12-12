@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Resume Analysis Report - InterviewFlow{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Candidate Info -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Resume Analysis Report</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Candidate:</strong> {{ candidate.name }}</p>
+                            <p><strong>Email:</strong> {{ candidate.email }}</p>
+                            <p><strong>Phone:</strong> {{ candidate.phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            {% if job %}
+                            <p><strong>Applied Position:</strong> {{ job.title }}</p>
+                            <p><strong>Department:</strong> {{ job.dept }}</p>
+                            <p><strong>Location:</strong> {{ job.location }}</p>
+                            {% else %}
+                            <p class="text-muted">No specific position applied</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Match Score -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Match Score</h4>
+                </div>
+                <div class="card-body">
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ report.match_score }}%;" 
+                             aria-valuenow="{{ report.match_score }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            <strong>{{ report.match_score }}%</strong>
+                        </div>
+                    </div>
+                    <p class="text-muted mt-2">Resume relevance to job description</p>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Summary</h4>
+                </div>
+                <div class="card-body">
+                    <p>{{ report.summary }}</p>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Technical Skills ({{ report.skills|length }})</h4>
+                </div>
+                <div class="card-body">
+                    {% if report.skills %}
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for skill in report.skills %}
+                        <span class="badge bg-info">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No technical skills detected</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Experience</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Years of Experience:</strong> {{ report.experience_years }} years</p>
+                </div>
+            </div>
+
+            <!-- Recommended Interview Questions -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Recommended Interview Questions</h4>
+                </div>
+                <div class="card-body">
+                    {% if report.recommended_questions %}
+                    <ol>
+                        {% for question in report.recommended_questions %}
+                        <li class="mb-2">{{ question }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                    <p class="text-muted">No specific questions generated</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Flags & Notes -->
+            {% if report.flags %}
+            <div class="card mb-4 border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h4>Flags & Notes</h4>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        {% for flag in report.flags %}
+                        <li class="mb-2">
+                            <i class="fas fa-exclamation-circle text-warning"></i> {{ flag }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Resume Snippets -->
+            {% if report.snippets %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4>Resume Snippets</h4>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="snippetAccordion">
+                        {% for snippet in report.snippets %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                                    Snippet {{ loop.index }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#snippetAccordion">
+                                <div class="accordion-body">
+                                    <pre style="background: #f5f5f5; padding: 10px; border-radius: 5px;">{{ snippet }}</pre>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Actions -->
+            <div class="mb-4">
+                <a href="{{ url_for('rag.upload_resume') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Upload
+                </a>
+                {% if current_user.role == 'admin' or current_user.role == 'hr' %}
+                <a href="{{ url_for('admin_users.list_users') }}" class="btn btn-primary">
+                    <i class="fas fa-users"></i> Manage Candidates
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

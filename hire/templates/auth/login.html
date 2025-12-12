@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Redback{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-sign-in-alt"></i> Login to Redback</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        <div class="form-group mb-3">
+                            <label for="role"><strong>Login As</strong></label>
+                            <select class="form-control" id="role" name="role" required onchange="toggleAdminToken()">
+                                <option value="">-- Select Your Role --</option>
+                                <option value="admin">Admin</option>
+                                <option value="hr">HR</option>
+                                <option value="interviewer">Interviewer</option>
+                                <option value="candidate">Candidate</option>
+                            </select>
+                            <small class="form-text text-muted">Select your role to login</small>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email"><strong>Email</strong></label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password"><strong>Password</strong></label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <!-- Admin Token Field (Hidden by default) -->
+                        <div class="form-group mb-3" id="admin-token-field" style="display: none;">
+                            <label for="admin_token"><strong>Admin Token</strong> <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="admin_token" name="admin_token" placeholder="Enter admin access token">
+                            <small class="form-text text-danger">
+                                <i class="fas fa-exclamation-triangle"></i> Admin login requires security token
+                            </small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block w-100">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        <hr>
+                        <div class="text-center">
+                            <p class="mb-2 text-muted">Don't have an account?</p>
+                            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success">
+                                <i class="fas fa-user-plus"></i> Register
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Login Info -->
+            <div class="card mt-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-shield-alt"></i> Admin Login Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <strong><i class="fas fa-info-circle"></i> Admin Login Requirements:</strong>
+                        <ul class="mb-0 mt-2">
+                            <li>Select "Admin" from role dropdown</li>
+                            <li>Enter admin email and password</li>
+                            <li>Enter admin security token</li>
+                        </ul>
+                    </div>
+                    <p class="text-muted small mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Note:</strong> Contact your system administrator for admin credentials or run <code>python create_admin.py</code> to create/reset admin account.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleAdminToken() {
+    var role = document.getElementById('role').value;
+    var tokenField = document.getElementById('admin-token-field');
+    var tokenInput = document.getElementById('admin_token');
+    
+    if (role === 'admin') {
+        tokenField.style.display = 'block';
+        tokenInput.required = true;
+    } else {
+        tokenField.style.display = 'none';
+        tokenInput.required = false;
+        tokenInput.value = '';
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleAdminToken();
+});
+</script>
+{% endblock %}

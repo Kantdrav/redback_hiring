@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Create Interview Round</h3>
+<form method="post">
+  <div class="mb-3"><label>Name</label><input name="name" class="form-control" required></div>
+  <div class="mb-3">
+    <label>Type</label>
+    <select name="type" class="form-select">
+      <option value="hr">HR</option>
+      <option value="mcq">MCQ</option>
+      <option value="technical">Technical</option>
+      <option value="coding">Coding</option>
+    </select>
+  </div>
+  <div class="mb-3"><label>Duration (minutes)</label><input name="duration" class="form-control" value="30"></div>
+  <div class="mb-3"><label>Order</label><input name="order_index" class="form-control" value="0"></div>
+  <div class="mb-3"><label>Config (JSON)</label><textarea name="config_json" class="form-control" rows="4">{}</textarea></div>
+  <button class="btn btn-success">Create</button>
+</form>
+{% endblock %}

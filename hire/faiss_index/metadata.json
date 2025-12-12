@@ -1,0 +1,83 @@
+[
+  {
+    "candidate_id": 1,
+    "chunk_id": "1_0",
+    "text": "Ravi Kant – Resume Profile Software Development Engineer (SDE) Intern candidate with strong foundations in Data Structures & Algorithms (DSA), backend engineering, and full -stack development. Experienced in building production-grade systems, LLM-based tools, and scalable microservices. Skilled in Python, JavaScript, FastAPI/Flask, and modern development workflows. Eager to contribute to real-world engineering projects at Springworks. Education • 2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3) • 2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%) • 2019: Secondary School – Gems English School, Rohtas (85%) Technical Skills Languages: Python, JavaScript, TypeScript, Java, SQL Frontend: React.js, Vue.js, Next.js (basics) Backend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices Databases: SQLite, MySQL, Redis AI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy, FAISS/Chroma DevOps: Git, Docker, CI/CD basics, Azure, Vercel Other: Shell scripting, Excel, Basic unit testing Selected Projects • Quiz Master V2 – Full-Stack Exam App Technologies: Flask • Vue.js • SQLite • Redis • Celery - Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools Technologies: FastAPI",
+    "page": null
+  },
+  {
+    "candidate_id": 1,
+    "chunk_id": "1_1",
+    "text": "- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools Technologies: FastAPI • LangChain • OpenAI - Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project Technologies: Python • SQL • pandas - Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations Technologies: MATLAB • Simulink • Python - Designed lead/lag compensators, Bode & Nyquist plots. Experience • Data Analyst Intern – Infotech (2024, Remote) - Conducted market & user research. - Automated data cleaning workflows using Python + SQL. • Vocational Trainee – Team Project (2023) - Assisted in documentation, planning, and implementation. Additional Information • Strong fundamentals in DSA; proficient in Python/Java/JavaScript • Available for full -time 6-month remote internship • Leadership: Deputy Secretary, Sundarbans House • Sports: Cricket — teamwork & strategic thinking",
+    "page": null
+  },
+  {
+    "candidate_id": 1,
+    "chunk_id": "1_2",
+    "text": "Cricket — teamwork & strategic thinking",
+    "page": null
+  },
+  {
+    "candidate_id": 2,
+    "chunk_id": "2_3",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2025-12-12T11:34:03.011434"
+  },
+  {
+    "candidate_id": 2,
+    "chunk_id": "2_4",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2025-12-12T11:34:03.011450"
+  },
+  {
+    "candidate_id": 2,
+    "chunk_id": "2_5",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2025-12-12T11:34:03.011457"
+  },
+  {
+    "candidate_id": 2,
+    "chunk_id": "2_6",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2025-12-12T11:34:03.011463"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_7",
+    "text": "Profile\nSoftware Development Engineer (SDE) Intern candidate with strong foundations\nin Data Structures & Algorithms (DSA), backend engineering, and full -stack\n",
+    "section": "summary",
+    "indexed_at": "2025-12-12T12:56:40.767485"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_8",
+    "text": "development. Experienced in building production-grade systems, LLM-based\ntools, and scalable microservices. Skilled in Python, JavaScript, FastAPI/Flask, and\nmodern development workflows. Eager to contribute to real-world engineering\nExperience\n• Data Analyst Intern – Infotech (2024, Remote)\n- Conducted market & user research. - Automated data cleaning workflows using Python + SQL. • Vocational Trainee – Team Project (2023)\n- Assisted in documentation, planning, and implementation. Additional Information\n• Strong fundamentals in DSA; proficient in Python/Java/JavaScript\n• Available for full -time 6-month remote internship\n\n• Leadership: Deputy Secretary, Sundarbans House\n• Sports: Cricket — teamwork & strategic thinking\n",
+    "section": "experience",
+    "indexed_at": "2025-12-12T12:56:40.767507"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_9",
+    "text": "Education\n• 2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n• 2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n• 2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2025-12-12T12:56:40.767518"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_10",
+    "text": "Technical Skills\nLanguages: Python, JavaScript, TypeScript, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, CI/CD basics, Azure, Vercel\nOther: Shell scripting, Excel, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2025-12-12T12:56:40.767526"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_11",
+    "text": "projects at Springworks. Selected Projects\n• Quiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\n- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n- Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project\nTechnologies: Python • SQL • pandas\n- Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\n- Designed lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2025-12-12T12:56:40.767535"
+  }
+]

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }} - Redback{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>{{ job.title }}</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            {% if current_user.role in ['admin', 'hr'] %}
+                <a href="{{ url_for('jobs.edit_job', job_id=job.id) }}" class="btn btn-warning">Edit Job</a>
+            {% endif %}
+            <a href="{{ url_for('jobs.list_jobs') }}" class="btn btn-secondary">Back to Jobs</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Job Details</h5>
+                    <table class="table">
+                        <tr>
+                            <th>Title</th>
+                            <td>{{ job.title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Department</th>
+                            <td>{{ job.dept or 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Location</th>
+                            <td>{{ job.location or 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td><span class="badge bg-success">{{ job.status }}</span></td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ job.description or 'N/A' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Posted</th>
+                            <td>{{ job.created_at.strftime('%Y-%m-%d %H:%M') if job.created_at else 'N/A' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

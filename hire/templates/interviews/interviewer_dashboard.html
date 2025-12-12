@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Your Interviews</h3>
+<table class="table">
+  <thead><tr><th>Candidate</th><th>Round</th><th>When (UTC)</th><th>Duration</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody>
+    {% for iv in interviews %}
+    <tr>
+      <td>{{ iv.candidate_id }}</td>
+      <td>{{ iv.round.name if iv.round else iv.round_id }}</td>
+      <td>{{ iv.scheduled_at_utc }}</td>
+      <td>{{ iv.duration }} min</td>
+      <td>{{ iv.status }}</td>
+      <td><a class="btn btn-sm btn-primary" href="{{ url_for('interviews.execute', interview_id=iv.id) }}">Execute</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No interviews assigned.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

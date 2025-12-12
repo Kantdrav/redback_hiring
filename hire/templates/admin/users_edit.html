@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit' if user else 'Create' }} User - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">{{ 'Edit User' if user else 'Create User' }}</h4>
+        </div>
+        <div class="card-body">
+          {% if not user %}
+          <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> 
+            <strong>Note:</strong> Use this form to create <strong>HR accounts</strong>. Candidates and Interviewers can also self-register.
+          </div>
+          {% endif %}
+          
+          <form method="post">
+            <div class="mb-3">
+              <label class="form-label"><strong>Email</strong></label>
+              <input name="email" class="form-control" type="email" value="{{ user.email if user else '' }}" {{ 'readonly' if user else '' }} required>
+              {% if user %}
+              <small class="text-muted">Email cannot be changed</small>
+              {% endif %}
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label"><strong>Name</strong></label>
+              <input name="name" class="form-control" value="{{ user.name if user else '' }}" required>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label"><strong>Role</strong></label>
+              <select name="role" class="form-select" required>
+                <option value="candidate" {% if user and user.role=='candidate' %}selected{% endif %}>Candidate</option>
+                <option value="hr" {% if user and user.role=='hr' %}selected{% endif %}>HR (Must be admin-created)</option>
+                <option value="interviewer" {% if user and user.role=='interviewer' %}selected{% endif %}>Interviewer</option>
+                <option value="admin" {% if user and user.role=='admin' %}selected{% endif %}>Admin</option>
+              </select>
+              <small class="text-muted">
+                <strong>HR role:</strong> Can only be created by admin (no self-registration)
+              </small>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label"><strong>Password</strong></label>
+              <input name="password" class="form-control" type="password" placeholder="{{ 'Leave blank to keep current password' if user else 'Set password' }}" {{ '' if user else 'required' }}>
+              {% if user %}
+              <small class="text-muted">Leave blank to keep current password</small>
+              {% endif %}
+            </div>
+            
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Save User
+              </button>
+              <a href="{{ url_for('admin_users.list_users') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

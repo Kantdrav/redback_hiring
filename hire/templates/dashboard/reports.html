@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - InterviewFlow{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Reports & Exports</h1>
+            <p class="text-muted">Generate and download recruitment reports</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Candidate Reports -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="fas fa-users"></i> Candidate Reports</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Export candidate lists and detailed information</p>
+                    <div class="list-group">
+                        <a href="{{ url_for('hr_dashboard.export_candidates') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">All Candidates</h6>
+                            <p class="mb-0 small">Export complete candidate list with contact info and match scores</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Reports -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5><i class="fas fa-chart-bar"></i> Analytics Reports</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Export metrics, insights, and trends</p>
+                    <div class="list-group">
+                        <a href="{{ url_for('hr_dashboard.export_analytics') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Dashboard Metrics</h6>
+                            <p class="mb-0 small">Summary of key metrics: total candidates, jobs, match scores</p>
+                        </a>
+                        <a href="{{ url_for('hr_dashboard.export_funnel') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Hiring Funnel</h6>
+                            <p class="mb-0 small">Pipeline breakdown by stage: applied, screening, interview, offer, hired</p>
+                        </a>
+                        <a href="{{ url_for('hr_dashboard.export_skills') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Skill Demand</h6>
+                            <p class="mb-0 small">Top in-demand technical skills across all job positions</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Reports -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5><i class="fas fa-briefcase"></i> Job Reports</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Export job postings and recruitment status</p>
+                    <div class="list-group">
+                        <a href="{{ url_for('hr_dashboard.export_jobs') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Job Positions</h6>
+                            <p class="mb-0 small">List of all jobs with candidate counts and average match scores</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Links -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5><i class="fas fa-th-large"></i> View Dashboards</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Navigate to interactive dashboards</p>
+                    <div class="list-group">
+                        <a href="{{ url_for('hr_dashboard.dashboard') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Main Dashboard</h6>
+                            <p class="mb-0 small">Key metrics, recent activity, top candidates</p>
+                        </a>
+                        <a href="{{ url_for('hr_dashboard.candidates_list') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Candidates List</h6>
+                            <p class="mb-0 small">Searchable and filterable candidate directory</p>
+                        </a>
+                        <a href="{{ url_for('hr_dashboard.analytics') }}" class="list-group-item list-group-item-action">
+                            <h6 class="mb-1">Analytics</h6>
+                            <p class="mb-0 small">Hiring funnel, skill demand, match score distribution</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Current Metrics Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <h4 class="text-primary">{{ metrics.total_candidates }}</h4>
+                            <p class="text-muted">Total Candidates</p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <h4 class="text-success">{{ metrics.open_jobs }}</h4>
+                            <p class="text-muted">Open Positions</p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <h4 class="text-info">{{ metrics.avg_match_score }}%</h4>
+                            <p class="text-muted">Avg Match Score</p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <h4 class="text-warning">{{ metrics.recent_applications_7d }}</h4>
+                            <p class="text-muted">Recent (7 days)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
