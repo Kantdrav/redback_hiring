@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import db, Job
+from models import db, Job, Candidate
 from flask_login import current_user, login_required
 
 jobs_bp = Blueprint("jobs", __name__, template_folder="templates/jobs")
@@ -8,13 +8,21 @@ jobs_bp = Blueprint("jobs", __name__, template_folder="templates/jobs")
 @login_required
 def list_jobs():
     jobs = Job.query.all()
-    return render_template("jobs/list.html", jobs=jobs)
+
+    applied_job_ids = []
+    if current_user.is_authenticated and getattr(current_user, "role", None) == "candidate":
+        applied_job_ids = [c.applied_job_id for c in Candidate.query.filter_by(user_id=current_user.id).all() if c.applied_job_id]
+
+    return render_template("jobs/list.html", jobs=jobs, applied_job_ids=applied_job_ids)
 
 @jobs_bp.route("/<int:job_id>")
 @login_required
 def view_job(job_id):
     job = Job.query.get_or_404(job_id)
-    return render_template("jobs/view.html", job=job)
+    already_applied = False
+    if current_user.is_authenticated and getattr(current_user, "role", None) == "candidate":
+        already_applied = Candidate.query.filter_by(user_id=current_user.id, applied_job_id=job_id).first() is not None
+    return render_template("jobs/view.html", job=job, already_applied=already_applied)
 
 @jobs_bp.route("/<int:job_id>/edit", methods=["GET", "POST"])
 @login_required

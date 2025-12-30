@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Quiz Management{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-0">Quiz Management</h2>
+            <small class="text-muted">Create and manage interview quizzes</small>
+        </div>
+        <a href="{{ url_for('interviews.create_round_for_quiz') }}" class="btn btn-primary">Create New Quiz</a>
+    </div>
+
+    {% if rounds %}
+        <div class="row">
+            {% for round in rounds %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="card-title">{{ round.name }}</h5>
+                                    <div class="text-muted small mb-2">
+                                        Type: <span class="badge bg-secondary">{{ round.type }}</span>
+                                        Duration: <span class="badge bg-info">{{ round.duration_minutes }} min</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="text-muted mb-3">Questions: {{ round.id }}</div>
+                                <a href="{{ url_for('interviews.quiz_questions', round_id=round.id) }}" class="btn btn-sm btn-outline-primary">Manage Questions</a>
+                                <a href="{{ url_for('interviews.mcq_create', round_id=round.id) }}" class="btn btn-sm btn-success">Add Question</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No quizzes created yet. <a href="{{ url_for('interviews.create_round_for_quiz') }}" class="alert-link">Create one now</a>.
+        </div>
+    {% endif %}
+</div>
+
+<script>
+// Simple helper to count questions for a round
+document.querySelectorAll('[data-round-id]').forEach(el => {
+    // Could be replaced with API call or template filter
+});
+</script>
+{% endblock %}

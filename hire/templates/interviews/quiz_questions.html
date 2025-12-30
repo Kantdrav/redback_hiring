@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ round.name }} - Questions{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-0">{{ round.name }}</h2>
+            <small class="text-muted">{{ round.type|upper }} · {{ round.duration_minutes }} minutes</small>
+        </div>
+        <div>
+            <a href="{{ url_for('interviews.mcq_create', round_id=round.id) }}" class="btn btn-success me-2">Add Question</a>
+            <a href="{{ url_for('interviews.list_quizzes') }}" class="btn btn-secondary">Back to Quizzes</a>
+        </div>
+    </div>
+
+    {% if questions %}
+        <div class="list-group">
+            {% for q in questions %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <h6 class="mb-1">Q{{ loop.index }}: {{ q.question_text[:80] }}{% if q.question_text|length > 80 %}...{% endif %}</h6>
+                            <div class="text-muted small">
+                                Marks: <strong>{{ q.marks }}</strong> 
+                                | Correct Answer: <strong>{{ q.get_choices()[q.correct_index] if q.correct_index < q.get_choices()|length else 'N/A' }}</strong>
+                            </div>
+                        </div>
+                        <div>
+                            <a href="{{ url_for('interviews.edit_mcq', question_id=q.id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a href="{{ url_for('interviews.delete_mcq', question_id=q.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this question?')">Delete</a>
+                        </div>
+                    </div>
+                    <div class="small">
+                        <strong>Options:</strong>
+                        <ol class="mb-0">
+                            {% for choice in q.get_choices() %}
+                                <li>{{ choice }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No questions added yet. <a href="{{ url_for('interviews.mcq_create', round_id=round.id) }}" class="alert-link">Add the first question</a>.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

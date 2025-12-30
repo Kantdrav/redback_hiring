@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Assigned Interviews - Interviewer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-4">Assigned Interviews</h1>
+        </div>
+        <div class="col-md-4 text-end">
+            <span class="badge bg-primary">Total: {{ interviews|length }}</span>
+        </div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="d-flex gap-2">
+                <a href="{{ url_for('interviewer.list_interviews') }}" class="btn btn-sm {% if current_status == 'all' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    All
+                </a>
+                <a href="{{ url_for('interviewer.list_interviews', status='scheduled') }}" class="btn btn-sm {% if current_status == 'scheduled' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    Scheduled
+                </a>
+                <a href="{{ url_for('interviewer.list_interviews', status='completed') }}" class="btn btn-sm {% if current_status == 'completed' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    Completed
+                </a>
+                <a href="{{ url_for('interviewer.list_interviews', status='cancelled') }}" class="btn btn-sm {% if current_status == 'cancelled' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    Cancelled
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Interviews Table -->
+    {% if interviews %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Candidate</th>
+                    <th>Email</th>
+                    <th>Job Position</th>
+                    <th>Round</th>
+                    <th>Scheduled Date/Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for interview in interviews %}
+                <tr>
+                    <td>
+                        <strong>{{ interview.candidate.name if interview.candidate else 'N/A' }}</strong>
+                    </td>
+                    <td>
+                        {{ interview.candidate.email if interview.candidate else 'N/A' }}
+                    </td>
+                    <td>
+                        {{ interview.candidate.job.title if interview.candidate and interview.candidate.job else 'N/A' }}
+                    </td>
+                    <td>
+                        {{ interview.round.name if interview.round else 'Round #' ~ interview.round_id }}
+                    </td>
+                    <td>
+                        {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') if interview.scheduled_at_utc else 'Not scheduled' }}
+                    </td>
+                    <td>
+                        <span class="badge bg-{% if interview.status == 'completed' %}success{% elif interview.status == 'scheduled' %}info{% elif interview.status == 'cancelled' %}secondary{% else %}warning{% endif %}">
+                            {{ interview.status|capitalize }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('interviewer.view_interview', interview_id=interview.id) }}" class="btn btn-sm btn-primary">
+                            View
+                        </a>
+                        {% if interview.status == 'scheduled' %}
+                        <a href="{{ url_for('interviews.execute', interview_id=interview.id) }}" class="btn btn-sm btn-success">
+                            Conduct
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info text-center" role="alert">
+        <h5>No interviews found</h5>
+        <p>There are no {% if current_status != 'all' %}{{ current_status }}{% endif %} interviews assigned to you.</p>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .btn-sm {
+        font-size: 0.875rem;
+    }
+</style>
+{% endblock %}

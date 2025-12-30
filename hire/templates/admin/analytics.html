@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Website Analytics - Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Website Visit Analytics</h1>
+            <p class="text-muted">Track website traffic, visitor activity, and page performance</p>
+        </div>
+    </div>
+
+    <!-- Analytics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Visits</h5>
+                    <h2 class="text-primary">{{ stats.total_visits }}</h2>
+                    <p class="text-muted small">All-time website visits</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Visits</h5>
+                    <h2 class="text-success">{{ stats.today_visits }}</h2>
+                    <p class="text-muted small">Visits since midnight</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Unique Visitors</h5>
+                    <h2 class="text-info">{{ stats.unique_visitors }}</h2>
+                    <p class="text-muted small">Unique user IDs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Unique IPs</h5>
+                    <h2 class="text-warning">{{ stats.unique_ips }}</h2>
+                    <p class="text-muted small">Unique IP addresses</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hourly Visit Distribution -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Hourly Visit Distribution (Last 24 Hours)</h5>
+                </div>
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    {% for hour in range(24) %}
+                                    <td style="text-align: center; width: 4.16%;">
+                                        <div style="height: {{ hourly_visits[hour] * 2 }}px; background-color: #007bff; margin-bottom: 5px;"></div>
+                                        <small>{{ hour }}:00</small><br>
+                                        <strong>{{ hourly_visits[hour] }}</strong>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Top Endpoints -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Top Visited Endpoints</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Endpoint</th>
+                                <th>Visits</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for endpoint, count in top_endpoints %}
+                            <tr>
+                                <td><code>{{ endpoint }}</code></td>
+                                <td>
+                                    <span class="badge badge-primary">{{ count }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Users -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Most Active Users</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Role</th>
+                                <th>Visits</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user, count in top_users %}
+                            <tr>
+                                <td>{{ user.name or user.email }}</td>
+                                <td><span class="badge badge-info">{{ user.role }}</span></td>
+                                <td>
+                                    <span class="badge badge-success">{{ count }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Visits -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Recent Website Visits</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Endpoint</th>
+                                <th>IP Address</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Response Time</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for visit in recent_visits.items %}
+                            <tr>
+                                <td>
+                                    {% if visit.user %}
+                                        <a href="{{ url_for('admin_users.user_detail', user_id=visit.user_id) }}">
+                                            {{ visit.user.name or visit.user.email }}
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">Anonymous</span>
+                                    {% endif %}
+                                </td>
+                                <td><code>{{ visit.endpoint }}</code></td>
+                                <td><small>{{ visit.ip_address }}</small></td>
+                                <td><span class="badge badge-secondary">{{ visit.method }}</span></td>
+                                <td>
+                                    {% if visit.status_code < 400 %}
+                                        <span class="badge badge-success">{{ visit.status_code }}</span>
+                                    {% elif visit.status_code < 500 %}
+                                        <span class="badge badge-warning">{{ visit.status_code }}</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">{{ visit.status_code }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ "%.2f" | format(visit.response_time_ms) }} ms</td>
+                                <td><small>{{ visit.visited_at.strftime('%Y-%m-%d %H:%M:%S') }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                    {% if recent_visits.pages > 1 %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if recent_visits.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_dashboard.analytics', page=recent_visits.prev_num) }}">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for page_num in recent_visits.iter_pages() %}
+                                {% if page_num %}
+                                    {% if page_num == recent_visits.page %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ page_num }}</span>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('admin_dashboard.analytics', page=page_num) }}">{{ page_num }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if recent_visits.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_dashboard.analytics', page=recent_visits.next_num) }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge-primary { background-color: #007bff; }
+    .badge-success { background-color: #28a745; }
+    .badge-info { background-color: #17a2b8; }
+    .badge-warning { background-color: #ffc107; color: #000; }
+    .badge-danger { background-color: #dc3545; }
+    .badge-secondary { background-color: #6c757d; }
+</style>
+{% endblock %}

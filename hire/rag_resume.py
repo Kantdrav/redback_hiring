@@ -1,7 +1,7 @@
 import os
 import json
 import re
-from flask import Blueprint, request, current_app, jsonify, render_template, redirect, url_for, flash
+from flask import Blueprint, request, current_app, jsonify, render_template, redirect, url_for, flash, send_file
 from werkzeug.utils import secure_filename
 from models import db, Candidate, Job
 from utils_pdf import extract_pdf_text, extract_sections
@@ -187,6 +187,28 @@ def view_report(candidate_id):
     db.session.commit()
     
     return render_template("resumes/view_report.html", candidate=cand, job=job, report=report)
+
+@rag_bp.route("/resume/<int:candidate_id>/download", methods=["GET"])
+@login_required
+def download_resume(candidate_id):
+    cand = Candidate.query.get_or_404(candidate_id)
+    # Authorization: allow owner candidate or admin/hr roles
+    user_role = getattr(current_user, "role", None)
+    if not (user_role in ["admin", "hr"] or cand.user_id == current_user.id):
+        flash("You don't have permission to download this resume", "danger")
+        return redirect(url_for("rag.view_report", candidate_id=candidate_id))
+
+    resume_path = cand.resume_path
+    if not resume_path or not os.path.exists(resume_path):
+        flash("Resume file not found", "warning")
+        return redirect(url_for("rag.view_report", candidate_id=candidate_id))
+
+    return send_file(
+        resume_path,
+        mimetype="application/pdf",
+        as_attachment=True,
+        download_name=os.path.basename(resume_path)
+    )
 
 def semantic_search(query, candidate_id=None, top_k=10):
     """

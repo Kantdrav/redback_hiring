@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Edit MCQ Question{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Edit MCQ Question</h2>
+            {% if round %}
+                <small class="text-muted">Quiz: {{ round.name }}</small>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('interviews.quiz_questions', round_id=round_id) }}" class="btn btn-secondary">Back</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('interviews.edit_mcq', question_id=question.id) }}">
+                        <div class="mb-3">
+                            <label for="question_text" class="form-label">Question Text</label>
+                            <textarea class="form-control" id="question_text" name="question_text" rows="3" required>{{ question.question_text }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Answer Choices</label>
+                            {% for i in range(4) %}
+                                <div class="mb-2">
+                                    <label for="choice{{ i }}" class="form-label small">Choice {{ i + 1 }}</label>
+                                    <input type="text" class="form-control" id="choice{{ i }}" name="choices" value="{{ choices[i] if i < choices|length else '' }}" required>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label for="correct_index" class="form-label">Correct Answer (0-3)</label>
+                                <input type="number" class="form-control" id="correct_index" name="correct_index" min="0" max="3" value="{{ question.correct_index }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="marks" class="form-label">Marks</label>
+                                <input type="number" class="form-control" id="marks" name="marks" step="0.5" min="0.5" value="{{ question.marks }}" required>
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">Update Question</button>
+                            <a href="{{ url_for('interviews.quiz_questions', round_id=round_id) }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

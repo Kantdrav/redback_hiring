@@ -65,17 +65,52 @@ def interviewer_dashboard():
     if current_user.role != "interviewer":
         flash("Only interviewers can view this page", "danger")
         return redirect(url_for("jobs.list_jobs"))
-    invs = Interview.query.filter_by(interviewer_id=current_user.id).order_by(Interview.scheduled_at_utc.asc()).all()
-    return render_template("interviews/interviewer_dashboard.html", interviews=invs)
+    
+    assigned_interviews = Interview.query.filter_by(interviewer_id=current_user.id).all()
+    pending_count = len([i for i in assigned_interviews if i.status == "scheduled"])
+    completed_count = len([i for i in assigned_interviews if i.status == "completed"])
+    
+    stats = {
+        "total_assigned": len(assigned_interviews),
+        "pending": pending_count,
+        "completed": completed_count
+    }
+    
+    recent_interviews = Interview.query.filter_by(interviewer_id=current_user.id)\
+        .order_by(Interview.scheduled_at_utc.desc()).limit(10).all()
+    
+    return render_template("interviews/interviewer_dashboard.html", 
+                          stats=stats, 
+                          recent_interviews=recent_interviews)
 
 @interviews_bp.route("/execute/<int:interview_id>", methods=["GET","POST"])
 @login_required
 def execute(interview_id):
     iv = Interview.query.get_or_404(interview_id)
-    # permission: assigned interviewer or hr/admin
-    if current_user.role not in ("admin","hr") and current_user.id != iv.interviewer_id:
+    
+    # permission: assigned interviewer, candidate taking the interview, hr/admin
+    is_interviewer = current_user.id == iv.interviewer_id
+    
+    # Check if candidate is the current user - by user_id OR by email match
+    is_candidate = False
+    if current_user.role == "candidate" and iv.candidate:
+        # Check by user_id if it exists
+        if iv.candidate.user_id == current_user.id:
+            is_candidate = True
+        # Fallback: check by email match
+        elif iv.candidate.email == current_user.email:
+            is_candidate = True
+    
+    is_admin_or_hr = current_user.role in ("admin", "hr")
+    
+    if not (is_interviewer or is_candidate or is_admin_or_hr):
         flash("Not authorized to execute this interview", "danger")
-        return redirect(url_for("interviews.interviewer_dashboard"))
+        # Redirect based on user role
+        if current_user.role == "candidate":
+            return redirect(url_for("candidate.view_interviews"))
+        else:
+            return redirect(url_for("interviews.interviewer_dashboard"))
+    
     if request.method == "POST":
         # endpoint to submit assessment
         score_numeric = request.form.get("score_numeric")
@@ -91,30 +126,123 @@ def execute(interview_id):
         mcq_questions = MCQQuestion.query.filter_by(round_id=rnd.id).all()
     return render_template("interviews/execute_interview.html", interview=iv, mcq_questions=mcq_questions)
 
-# MCQ endpoints
+# MCQ/Quiz endpoints
+@interviews_bp.route("/quizzes")
+@login_required
+@role_required("admin","hr","interviewer")
+def list_quizzes():
+    """List all available rounds for creating quizzes"""
+    rounds = Round.query.order_by(Round.order_index).all()
+    return render_template("interviews/quiz_list.html", rounds=rounds)
+
+
+@interviews_bp.route("/quiz/create", methods=["GET","POST"])
+@login_required
+@role_required("admin","hr","interviewer")
+def create_round_for_quiz():
+    """Create a new quiz/round"""
+    if request.method == "POST":
+        name = request.form.get("name")
+        rtype = request.form.get("type")
+        duration = int(request.form.get("duration") or 30)
+        config = request.form.get("config_json") or "{}"
+        
+        r = Round(name=name, type=rtype, duration_minutes=duration, order_index=0, config_json=config)
+        db.session.add(r)
+        db.session.commit()
+        
+        flash(f"Quiz '{name}' created successfully", "success")
+        return redirect(url_for("interviews.quiz_questions", round_id=r.id))
+    
+    return render_template("interviews/create_quiz.html")
+
+
+@interviews_bp.route("/quiz/<int:round_id>/questions")
+@login_required
+@role_required("admin","hr","interviewer")
+def quiz_questions(round_id):
+    """View and manage questions for a quiz"""
+    round_info = Round.query.get_or_404(round_id)
+    questions = MCQQuestion.query.filter_by(round_id=round_id).all()
+    return render_template("interviews/quiz_questions.html", round=round_info, questions=questions)
+
+
 @interviews_bp.route("/mcq/<int:round_id>/create", methods=["GET","POST"])
 @login_required
-@role_required("admin","hr")
+@role_required("admin","hr","interviewer")
 def mcq_create(round_id):
+    """Add MCQ question to a round/quiz"""
+    round_info = Round.query.get_or_404(round_id)
+    
     if request.method == "POST":
         qtext = request.form.get("question_text")
         choices_raw = request.form.getlist("choices")
         correct_index = int(request.form.get("correct_index") or 0)
         marks = float(request.form.get("marks") or 1.0)
-        from models.mcq_question import MCQQuestion
+        
         q = MCQQuestion(round_id=round_id, question_text=qtext, choices_json=json.dumps(choices_raw), correct_index=correct_index, marks=marks)
         db.session.add(q)
         db.session.commit()
+        
         flash("MCQ question added", "success")
-        return redirect(url_for("interviews.execute", interview_id=request.args.get("interview_id") or 0))
-    return render_template("interviews/mcq_create.html", round_id=round_id)
+        return redirect(url_for("interviews.quiz_questions", round_id=round_id))
+    
+    return render_template("interviews/mcq_create.html", round_id=round_id, round=round_info)
+
+
+@interviews_bp.route("/mcq/<int:question_id>/edit", methods=["GET","POST"])
+@login_required
+@role_required("admin","hr","interviewer")
+def edit_mcq(question_id):
+    """Edit an MCQ question"""
+    q = MCQQuestion.query.get_or_404(question_id)
+    round_id = q.round_id
+    round_info = Round.query.get(round_id)
+    
+    if request.method == "POST":
+        q.question_text = request.form.get("question_text")
+        q.choices_json = json.dumps(request.form.getlist("choices"))
+        q.correct_index = int(request.form.get("correct_index") or 0)
+        q.marks = float(request.form.get("marks") or 1.0)
+        db.session.commit()
+        
+        flash("Question updated", "success")
+        return redirect(url_for("interviews.quiz_questions", round_id=round_id))
+    
+    choices = q.get_choices()
+    return render_template("interviews/edit_mcq.html", question=q, round=round_info, round_id=round_id, choices=choices)
+
+
+@interviews_bp.route("/mcq/<int:question_id>/delete", methods=["POST"])
+@login_required
+@role_required("admin","hr","interviewer")
+def delete_mcq(question_id):
+    """Delete an MCQ question"""
+    q = MCQQuestion.query.get_or_404(question_id)
+    round_id = q.round_id
+    db.session.delete(q)
+    db.session.commit()
+    
+    flash("Question deleted", "success")
+    return redirect(url_for("interviews.quiz_questions", round_id=round_id))
 
 @interviews_bp.route("/mcq/take/<int:round_id>", methods=["GET","POST"])
 @login_required
 def mcq_take(round_id):
     # candidate taking the MCQ as part of an interview flow
     # find the interview for this candidate & round where status is scheduled or in-progress
-    iv = Interview.query.filter_by(round_id=round_id, candidate_id=current_user.id).order_by(Interview.scheduled_at_utc.desc()).first()
+    # map logged-in user -> Candidate profile
+    candidate_profile = None
+    try:
+        if hasattr(current_user, "role") and current_user.role == "candidate":
+            candidate_profile = Candidate.query.filter_by(user_id=current_user.id).first()
+    except Exception:
+        candidate_profile = None
+
+    iv = None
+    if candidate_profile is not None:
+        iv = Interview.query.filter_by(round_id=round_id, candidate_id=candidate_profile.id)\
+            .order_by(Interview.scheduled_at_utc.desc()).first()
     if not iv:
         flash("No active interview found for this round", "danger")
         return redirect(url_for("jobs.list_jobs"))
@@ -132,3 +260,62 @@ def mcq_take(round_id):
         flash("MCQ submitted. Score: {} / {}".format(res["obtained_marks"], res["total_marks"]), "success")
         return redirect(url_for("jobs.list_jobs"))
     return render_template("interviews/mcq_take.html", questions=qs, round_id=round_id)
+
+
+@interviews_bp.route("/mcq/take/interview/<int:interview_id>", methods=["GET","POST"])
+@login_required
+def mcq_take_interview(interview_id):
+    """Take MCQ test for a specific interview"""
+    iv = Interview.query.get_or_404(interview_id)
+    
+    # Check authorization - candidate or interviewer
+    is_candidate = False
+    if current_user.role == "candidate" and iv.candidate:
+        if iv.candidate.user_id == current_user.id or iv.candidate.email == current_user.email:
+            is_candidate = True
+    
+    is_interviewer = current_user.id == iv.interviewer_id
+    is_admin_or_hr = current_user.role in ("admin", "hr")
+    
+    if not (is_candidate or is_interviewer or is_admin_or_hr):
+        flash("Not authorized to take this test", "danger")
+        return redirect(url_for("candidate.view_interviews") if current_user.role == "candidate" else url_for("interviews.interviewer_dashboard"))
+    
+    round_id = iv.round_id
+    qs = MCQQuestion.query.filter_by(round_id=round_id).all()
+    
+    if not qs:
+        flash("No questions available for this quiz", "warning")
+        return redirect(url_for("interviews.execute", interview_id=interview_id))
+    
+    if request.method == "POST":
+        answers = {}
+        for q in qs:
+            val = request.form.get(f"q_{q.id}")
+            if val is not None:
+                answers[str(q.id)] = int(val)
+        
+        res = grade_mcq(round_id, answers)
+        
+        # Save assessment record
+        a = record_assessment(
+            interview_id=iv.id, 
+            submitted_by=current_user.id, 
+            score_numeric=res["obtained_marks"], 
+            score_json=json.dumps(res), 
+            feedback_text="MCQ Auto-graded"
+        )
+        
+        # Update interview status to completed
+        iv.status = "completed"
+        db.session.commit()
+        
+        flash(f"MCQ submitted. Score: {res['obtained_marks']} / {res['total_marks']}", "success")
+        
+        # Redirect based on role
+        if current_user.role == "candidate":
+            return redirect(url_for("candidate.view_interviews"))
+        else:
+            return redirect(url_for("interviews.interviewer_dashboard"))
+    
+    return render_template("interviews/mcq_take.html", questions=qs, round_id=round_id, interview=iv)

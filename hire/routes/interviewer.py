@@ -257,3 +257,111 @@ def log_interviewer_action(action, entity_type, entity_id, user_id, payload=None
     )
     db.session.add(log)
     db.session.commit()
+
+
+# ==================== CANDIDATES LIST ====================
+@interviewer_bp.route("/candidates")
+@login_required
+@role_required("interviewer")
+def list_candidates():
+    """View list of candidates filtered by experience level"""
+    experience_filter = request.args.get("experience", "all")
+    search_query = request.args.get("search", "").strip()
+    
+    query = Candidate.query
+    
+    # Apply search filter
+    if search_query:
+        query = query.filter(
+            db.or_(
+                Candidate.name.ilike(f"%{search_query}%"),
+                Candidate.email.ilike(f"%{search_query}%")
+            )
+        )
+    
+    # Get all candidates first to filter by experience level
+    candidates = query.all()
+    
+    # Filter by experience level
+    if experience_filter == "beginner":
+        candidates = [c for c in candidates if c.get_experience_level() == "beginner"]
+    elif experience_filter == "intermediate":
+        candidates = [c for c in candidates if c.get_experience_level() == "intermediate"]
+    elif experience_filter == "advanced":
+        candidates = [c for c in candidates if c.get_experience_level() == "advanced"]
+    
+    return render_template("interviewer/candidates_list.html", 
+                          candidates=candidates,
+                          current_filter=experience_filter,
+                          search_query=search_query)
+
+
+@interviewer_bp.route("/candidates/<int:candidate_id>")
+@login_required
+@role_required("interviewer")
+def view_candidate(candidate_id):
+    """View candidate details"""
+    candidate = Candidate.query.get_or_404(candidate_id)
+    
+    # Get candidate's job application
+    job = candidate.job
+    
+    # Get candidate's interviews
+    interviews = Interview.query.filter_by(candidate_id=candidate_id).all()
+    
+    return render_template("interviewer/candidate_detail.html",
+                          candidate=candidate,
+                          job=job,
+                          interviews=interviews,
+                          experience_level=candidate.get_experience_level())
+
+
+@interviewer_bp.route("/candidates/<int:candidate_id>/assign-interview", methods=["GET", "POST"])
+@login_required
+@role_required("interviewer")
+def assign_interview(candidate_id):
+    """Assign an interview/quiz to a candidate"""
+    candidate = Candidate.query.get_or_404(candidate_id)
+    
+    if request.method == "POST":
+        round_id = request.form.get("round_id", type=int)
+        scheduled_at = request.form.get("scheduled_at")
+        
+        if not round_id:
+            flash("Please select a round/quiz", "danger")
+            return redirect(url_for("interviewer.assign_interview", candidate_id=candidate_id))
+        
+        # Create the interview
+        interview = Interview(
+            candidate_id=candidate_id,
+            interviewer_id=current_user.id,
+            round_id=round_id,
+            status="scheduled"
+        )
+        
+        if scheduled_at:
+            try:
+                from datetime import datetime as dt
+                interview.scheduled_at_utc = dt.fromisoformat(scheduled_at)
+            except:
+                flash("Invalid date/time format", "danger")
+                return redirect(url_for("interviewer.assign_interview", candidate_id=candidate_id))
+        
+        interview.created_at = datetime.utcnow()
+        
+        db.session.add(interview)
+        db.session.commit()
+        
+        log_interviewer_action("assign", "interview", interview.id, current_user.id,
+                              {"candidate_id": candidate_id, "round_id": round_id})
+        
+        flash(f"Interview assigned to {candidate.name} successfully", "success")
+        return redirect(url_for("interviewer.view_candidate", candidate_id=candidate_id))
+    
+    # GET request - show form with available rounds/quizzes
+    rounds = Round.query.all()
+    
+    return render_template("interviewer/assign_interview.html",
+                          candidate=candidate,
+                          rounds=rounds)
+

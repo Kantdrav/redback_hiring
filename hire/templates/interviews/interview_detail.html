@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Details - Interviewer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-2">Interview Details</h1>
+            <p class="text-muted">
+                <span class="badge bg-info">{{ interview.status|capitalize }}</span>
+                {% if interview.scheduled_at_utc %}
+                <span>Scheduled: {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') }}</span>
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('interviewer.list_interviews') }}" class="btn btn-outline-secondary">
+                ← Back to Interviews
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Candidate Information -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Candidate Information</h5>
+                </div>
+                <div class="card-body">
+                    {% if interview.candidate %}
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Name:</dt>
+                        <dd class="col-sm-8">{{ interview.candidate.name }}</dd>
+
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">{{ interview.candidate.email }}</dd>
+
+                        <dt class="col-sm-4">Phone:</dt>
+                        <dd class="col-sm-8">{{ interview.candidate.phone or 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Experience:</dt>
+                        <dd class="col-sm-8">{{ interview.candidate.experience_years }} years</dd>
+
+                        <dt class="col-sm-4">Job Applied:</dt>
+                        <dd class="col-sm-8">{{ interview.candidate.job.title if interview.candidate.job else 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-secondary">{{ interview.candidate.status|capitalize }}</span>
+                        </dd>
+                    </dl>
+                    {% else %}
+                    <p class="text-muted">Candidate information not available</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Information -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Interview Details</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Interview ID:</dt>
+                        <dd class="col-sm-8">#{{ interview.id }}</dd>
+
+                        <dt class="col-sm-4">Round:</dt>
+                        <dd class="col-sm-8">{{ round_info.name if round_info else 'Round #' ~ interview.round_id }}</dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-{% if interview.status == 'completed' %}success{% elif interview.status == 'scheduled' %}info{% else %}secondary{% endif %}">
+                                {{ interview.status|capitalize }}
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-4">Scheduled At:</dt>
+                        <dd class="col-sm-8">
+                            {% if interview.scheduled_at_utc %}
+                            {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') }}
+                            {% else %}
+                            Not scheduled
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-4">Created:</dt>
+                        <dd class="col-sm-8">{{ interview.created_at.strftime('%Y-%m-%d %H:%M') if interview.created_at else 'N/A' }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Assessment/Grading -->
+            {% if assessment %}
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Assessment</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Score:</strong> {{ assessment.score_numeric or 'Not graded' }}/100</p>
+                    {% if assessment.feedback_text %}
+                    <p><strong>Feedback:</strong></p>
+                    <p>{{ assessment.feedback_text }}</p>
+                    {% endif %}
+                    {% if assessment.submitted_at %}
+                    <p class="text-muted small">Submitted: {{ assessment.submitted_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                No assessment submitted yet.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row mt-4">
+        <div class="col-12">
+            {% if interview.status == 'scheduled' %}
+            <a href="{{ url_for('interviews.execute', interview_id=interview.id) }}" class="btn btn-lg btn-success">
+                Conduct Interview
+            </a>
+            {% endif %}
+            
+            {% if not assessment or not assessment.score_numeric %}
+            <a href="{{ url_for('interviewer.grade_interview', interview_id=interview.id) }}" class="btn btn-lg btn-primary">
+                Grade Interview
+            </a>
+            {% else %}
+            <a href="{{ url_for('interviewer.grade_interview', interview_id=interview.id) }}" class="btn btn-lg btn-secondary">
+                Update Grade
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

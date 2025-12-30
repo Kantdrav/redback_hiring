@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Schedules - HR{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Interview Schedules</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('hr_jobs.create_interview_schedule') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Schedule Interview
+            </a>
+        </div>
+    </div>
+
+    {% if schedules %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Candidate</th>
+                    <th>Job</th>
+                    <th>Scheduled Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for schedule in schedules %}
+                <tr>
+                    <td><strong>{{ schedule.candidate.name if schedule.candidate else '-' }}</strong></td>
+                    <td>{{ schedule.job.title if schedule.job else '-' }}</td>
+                    <td>{{ schedule.scheduled_at.strftime('%Y-%m-%d %H:%M') if schedule.scheduled_at else '-' }}</td>
+                    <td>
+                        {% if schedule.status == 'invited' %}
+                            <span class="badge bg-warning">Invited</span>
+                        {% elif schedule.status == 'completed' %}
+                            <span class="badge bg-success">Completed</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ schedule.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('hr_jobs.create_interview_schedule') }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No interview schedules created yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

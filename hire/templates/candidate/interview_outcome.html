@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Interview Outcome{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Interview Outcome</h2>
+        <a href="{{ url_for('candidate.view_interviews') }}" class="btn btn-secondary">Back to Interviews</a>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Plan: {{ schedule.interview_plan.name if schedule.interview_plan else 'N/A' }}</h5>
+            <p class="mb-1">Status: <span class="badge bg-info text-uppercase">{{ schedule.status }}</span></p>
+            <p class="mb-0">Completed: {{ schedule.completed_at.strftime('%Y-%m-%d') if schedule.completed_at else 'In progress' }}</p>
+        </div>
+    </div>
+
+    <h5>Test Submissions</h5>
+    {% if test_results %}
+        <div class="list-group mb-3">
+            {% for result in test_results %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>Round {{ result.round_index + 1 }}</strong>
+                            <div class="text-muted">Submitted {{ result.submitted_at.strftime('%Y-%m-%d %H:%M') if result.submitted_at else 'N/A' }}</div>
+                        </div>
+                        <span class="badge bg-secondary">{{ result.status or 'pending_review' }}</span>
+                    </div>
+                    {% if result.test_data_json %}
+                        <pre class="mt-2 mb-0 small bg-light p-2">{{ result.test_data_json }}</pre>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">No submissions yet.</div>
+    {% endif %}
+
+    <h5>Feedback</h5>
+    {% if feedback %}
+        <pre class="bg-light p-2 small">{{ feedback | tojson(indent=2) }}</pre>
+    {% else %}
+        <div class="alert alert-secondary">Feedback not available yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

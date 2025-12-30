@@ -40,7 +40,33 @@
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_candidates') }}">Candidates</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_jobs') }}">Jobs</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_interview_plans') }}">Interview Plans</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ url_for('interviews.list_quizzes') }}">Quiz Management</a></li>
               </ul>
+            </li>
+            {% endif %}
+            {% if current_user.role == 'interviewer' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('interviews.interviewer_dashboard') }}">
+                <i class="fas fa-video"></i> Interviews
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('interviews.list_quizzes') }}">
+                <i class="fas fa-list-check"></i> Quizzes
+              </a>
+            </li>
+            {% endif %}
+            {% if current_user.role == 'candidate' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('candidate.view_interviews') }}">
+                <i class="fas fa-calendar-check"></i> Interviews
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-sm btn-success ms-2" href="{{ url_for('candidate.view_interviews') }}">
+                Take Interview
+              </a>
             </li>
             {% endif %}
             {% if current_user.role == 'admin' %}

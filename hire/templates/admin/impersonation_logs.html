@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Impersonation Logs - Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1>Admin Impersonation Action Logs</h1>
+            <p class="text-muted">Track all actions performed by admins on behalf of other users</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Actions</h5>
+                    <h2 class="text-primary">{{ stats.total_actions }}</h2>
+                    <p class="text-muted small">All-time admin actions</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Today's Actions</h5>
+                    <h2 class="text-info">{{ stats.today_actions }}</h2>
+                    <p class="text-muted small">Actions performed today</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Successful</h5>
+                    <h2 class="text-success">{{ stats.successful_actions }}</h2>
+                    <p class="text-muted small">Completed successfully</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Failed</h5>
+                    <h2 class="text-danger">{{ stats.failed_actions }}</h2>
+                    <p class="text-muted small">Failed actions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Type Distribution -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Action Type Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Action Type</th>
+                                <th>Total Count</th>
+                                <th>Success</th>
+                                <th>Failed/Skipped</th>
+                                <th>Success Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for action, total_count, success_count in action_stats %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('admin_dashboard.impersonation_logs', action=action) }}">
+                                        <span class="badge badge-info">{{ action }}</span>
+                                    </a>
+                                </td>
+                                <td><strong>{{ total_count }}</strong></td>
+                                <td><span class="badge badge-success">{{ success_count or 0 }}</span></td>
+                                <td><span class="badge badge-warning">{{ total_count - (success_count or 0) }}</span></td>
+                                <td>
+                                    {% if total_count > 0 %}
+                                        {{ "%.1f" | format(((success_count or 0) / total_count) * 100) }}%
+                                    {% else %}
+                                        0%
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                {% if action_filter %}
+                    Filtering by action: <strong>{{ action_filter }}</strong>
+                    <a href="{{ url_for('admin_dashboard.impersonation_logs') }}" class="btn btn-sm btn-secondary">Clear Filter</a>
+                {% else %}
+                    <strong>All Actions</strong> - Click on an action type above to filter
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Logs Table -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Action Logs</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Admin</th>
+                                <th>Target User</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>Status</th>
+                                <th>Error</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in logs.items %}
+                            <tr>
+                                <td>
+                                    <a href="{{ url_for('admin_users.user_detail', user_id=log.admin_id) }}">
+                                        {{ log.admin.name or log.admin.email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('admin_users.user_detail', user_id=log.target_user_id) }}">
+                                        {{ log.target_user.name or log.target_user.email }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">{{ log.action }}</span>
+                                </td>
+                                <td>
+                                    {% if log.details_json %}
+                                        <small><code>{{ log.details_json }}</code></small>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if log.status == 'success' %}
+                                        <span class="badge badge-success">Success</span>
+                                    {% elif log.status == 'failed' %}
+                                        <span class="badge badge-danger">Failed</span>
+                                    {% elif log.status == 'skipped' %}
+                                        <span class="badge badge-warning">Skipped</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if log.error_message %}
+                                        <small class="text-danger" title="{{ log.error_message }}">
+                                            {{ log.error_message[:50] }}{% if log.error_message|length > 50 %}...{% endif %}
+                                        </small>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td><small>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if logs.total == 0 %}
+                    <div class="alert alert-info mt-3">
+                        No impersonation logs found.
+                    </div>
+                    {% endif %}
+
+                    <!-- Pagination -->
+                    {% if logs.pages > 1 %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if logs.has_prev %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_dashboard.impersonation_logs', page=logs.prev_num, action=action_filter) }}">Previous</a>
+                            </li>
+                            {% endif %}
+
+                            {% for page_num in logs.iter_pages() %}
+                                {% if page_num %}
+                                    {% if page_num == logs.page %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ page_num }}</span>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ url_for('admin_dashboard.impersonation_logs', page=page_num, action=action_filter) }}">{{ page_num }}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if logs.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('admin_dashboard.impersonation_logs', page=logs.next_num, action=action_filter) }}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .badge-primary { background-color: #007bff; }
+    .badge-success { background-color: #28a745; }
+    .badge-info { background-color: #17a2b8; }
+    .badge-warning { background-color: #ffc107; color: #000; }
+    .badge-danger { background-color: #dc3545; }
+</style>
+{% endblock %}

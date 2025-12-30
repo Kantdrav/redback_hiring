@@ -1,21 +1,71 @@
 {% extends "base.html" %}
+{% block title %}Interviewer Dashboard{% endblock %}
 {% block content %}
-<h3>Your Interviews</h3>
-<table class="table">
-  <thead><tr><th>Candidate</th><th>Round</th><th>When (UTC)</th><th>Duration</th><th>Status</th><th>Action</th></tr></thead>
-  <tbody>
-    {% for iv in interviews %}
-    <tr>
-      <td>{{ iv.candidate_id }}</td>
-      <td>{{ iv.round.name if iv.round else iv.round_id }}</td>
-      <td>{{ iv.scheduled_at_utc }}</td>
-      <td>{{ iv.duration }} min</td>
-      <td>{{ iv.status }}</td>
-      <td><a class="btn btn-sm btn-primary" href="{{ url_for('interviews.execute', interview_id=iv.id) }}">Execute</a></td>
-    </tr>
-    {% else %}
-    <tr><td colspan="6">No interviews assigned.</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="container mt-4">
+  <!-- Navigation Cards -->
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Assigned Interviews</h5>
+          <p class="text-muted">{{ stats.total_assigned }} interviews assigned</p>
+          <a href="{{ url_for('interviewer.list_interviews') }}" class="btn btn-primary">View Interviews</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Candidates</h5>
+          <p class="text-muted">Browse candidates by experience level</p>
+          <a href="{{ url_for('interviewer.list_candidates') }}" class="btn btn-primary">View Candidates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Interviews -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Recent Interviews</h2>
+    <div class="text-muted">Latest 10 assigned to you</div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Job</th>
+          <th>Round</th>
+          <th>When (UTC)</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for iv in recent_interviews %}
+          <tr>
+            <td>
+              <div class="fw-semibold">{{ iv.candidate.name if iv.candidate else 'Candidate #' ~ iv.candidate_id }}</div>
+              <div class="text-muted small">{{ iv.candidate.email if iv.candidate else '' }}</div>
+            </td>
+            <td>
+              {{ iv.candidate.job.title if iv.candidate and iv.candidate.job else 'N/A' }}
+            </td>
+            <td>{{ iv.round.name if iv.round else 'Round #' ~ iv.round_id }}</td>
+            <td>{{ iv.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') if iv.scheduled_at_utc else 'Not set' }}</td>
+            <td>
+              <span class="badge bg-{% if iv.status == 'completed' %}success{% elif iv.status == 'cancelled' %}secondary{% else %}info{% endif %}">{{ iv.status|capitalize }}</span>
+            </td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-primary" href="{{ url_for('interviews.execute', interview_id=iv.id) }}">Conduct</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="6" class="text-muted">No interviews assigned.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

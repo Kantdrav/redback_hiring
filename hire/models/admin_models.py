@@ -81,3 +81,35 @@ class RoundTemplate(db.Model):
             return json.loads(self.config_json or "{}")
         except Exception:
             return {}
+
+
+class WebsiteVisit(db.Model):
+    """Track website visits and page views"""
+    __tablename__ = "website_visits"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    ip_address = db.Column(db.String(50))
+    user_agent = db.Column(db.String(500))
+    endpoint = db.Column(db.String(255))
+    method = db.Column(db.String(10))
+    status_code = db.Column(db.Integer)
+    response_time_ms = db.Column(db.Float)
+    visited_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship("User", backref="visits")
+
+
+class UserImpersonation(db.Model):
+    """Audit log for admin impersonation actions"""
+    __tablename__ = "user_impersonations"
+    id = db.Column(db.Integer, primary_key=True)
+    admin_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    target_user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    action = db.Column(db.String(100), nullable=False)
+    details_json = db.Column(db.Text, default='{}')
+    status = db.Column(db.String(50), default="success")
+    error_message = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    admin = db.relationship("User", foreign_keys=[admin_id], backref="admin_impersonations")
+    target_user = db.relationship("User", foreign_keys=[target_user_id], backref="impersonated_by")

@@ -91,11 +91,8 @@ def login():
             flash(f"Invalid role selected. Your account role is: {user.role.capitalize()}", "warning")
             return redirect(url_for("auth.login"))
         
-        # Admin login requires token verification
-        if user.role == "admin":
-            if admin_token != ADMIN_BYPASS_TOKEN:
-                flash("Admin login requires valid admin token", "danger")
-                return redirect(url_for("auth.login"))
+        # Admin login with token is optional - allow password-only login for admin
+        # Token is only required for token-based bypass (no password)
         
         login_user(UserLogin(user))
         flash(f"Logged in as {user.role.capitalize()}", "success")

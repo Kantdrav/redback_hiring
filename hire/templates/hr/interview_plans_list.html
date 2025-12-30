@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Plans - HR{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Interview Plans</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('hr_jobs.create_interview_plan') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Create Plan
+            </a>
+        </div>
+    </div>
+
+    {% if plans %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Plan Name</th>
+                    <th>Job</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for plan in plans %}
+                <tr>
+                    <td><strong>{{ plan.name }}</strong></td>
+                    <td>{{ plan.job.title if plan.job else '-' }}</td>
+                    <td>
+                        {% if plan.status == 'active' %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ plan.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ plan.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <a href="{{ url_for('hr_jobs.edit_interview_plan', plan_id=plan.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No interview plans created yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -39,11 +39,33 @@ def dashboard():
         "completed_interviews": len(completed_schedules)
     }
     
+    # Build map of schedule_id -> mcq_round_id for quick access in template
+    mcq_round_map = {}
+    try:
+        from models.round import Round
+        for s in pending_schedules:
+            try:
+                plan = s.interview_plan
+                rounds = plan.get_rounds() if plan else []
+                current_round = rounds[s.current_round_index] if s.current_round_index < len(rounds) else None
+                if current_round and current_round.get("type") == "mcq":
+                    q = Round.query.filter(Round.type == "mcq")
+                    if current_round.get("name"):
+                        q = q.filter(Round.name == current_round.get("name"))
+                    match = q.order_by(Round.created_at.desc()).first()
+                    if match:
+                        mcq_round_map[s.id] = match.id
+            except Exception:
+                continue
+    except Exception:
+        mcq_round_map = {}
+
     return render_template("candidate/dashboard.html", 
                           stats=stats,
                           candidate=candidate,
                           pending_interviews=pending_schedules,
-                          completed_interviews=completed_schedules)
+                          completed_interviews=completed_schedules,
+                          mcq_round_map=mcq_round_map)
 
 
 # ==================== JOB APPLICATIONS ====================
@@ -95,9 +117,9 @@ def apply_for_job(job_id):
     # Create application
     candidate = Candidate(
         user_id=current_user.id,
-        name=current_user.name,
+        name=getattr(current_user, "name", current_user.email),
         email=current_user.email,
-        phone=current_user.phone,
+        phone=getattr(current_user, "phone", None),
         applied_job_id=job_id,
         status="applied"
     )
@@ -124,14 +146,46 @@ def my_applications():
 @role_required("candidate")
 def view_interviews():
     """View scheduled interviews"""
+    from models import Interview
+    
     candidate = Candidate.query.filter_by(user_id=current_user.id).all()
     candidate_ids = [c.id for c in candidate]
     
+    # Get both InterviewSchedule and Interview records
     schedules = InterviewSchedule.query\
         .filter(InterviewSchedule.candidate_id.in_(candidate_ids))\
         .order_by(InterviewSchedule.invited_at.desc()).all()
     
-    return render_template("candidate/interviews_list.html", schedules=schedules)
+    # Get Interview records assigned by interviewers
+    interviews = Interview.query\
+        .filter(Interview.candidate_id.in_(candidate_ids))\
+        .order_by(Interview.created_at.desc()).all()
+
+    # Build map of schedule_id -> mcq_round_id when current round is mcq
+    mcq_round_map = {}
+    try:
+        from models.round import Round
+        for s in schedules:
+            try:
+                plan = s.interview_plan
+                rounds = plan.get_rounds() if plan else []
+                current_round = rounds[s.current_round_index] if s.current_round_index < len(rounds) else None
+                if current_round and current_round.get("type") == "mcq":
+                    q = Round.query.filter(Round.type == "mcq")
+                    if current_round.get("name"):
+                        q = q.filter(Round.name == current_round.get("name"))
+                    match = q.order_by(Round.created_at.desc()).first()
+                    if match:
+                        mcq_round_map[s.id] = match.id
+            except Exception:
+                continue
+    except Exception:
+        mcq_round_map = {}
+
+    return render_template("candidate/interviews_list.html", 
+                          schedules=schedules, 
+                          interviews=interviews,
+                          mcq_round_map=mcq_round_map)
 
 
 @candidate_bp.route("/interviews/<int:schedule_id>/accept", methods=["POST"])
@@ -208,11 +262,33 @@ def take_test(schedule_id):
     rounds = plan.get_rounds()
     current_round = rounds[schedule.current_round_index] if schedule.current_round_index < len(rounds) else None
     
+    # Resolve MCQ round id and questions if current round is MCQ
+    mcq_round_id = None
+    mcq_questions = []
+    try:
+        if current_round and current_round.get("type") == "mcq":
+            from models.round import Round
+            from models.mcq_question import MCQQuestion
+            q = Round.query.filter(Round.type == "mcq")
+            # Prefer name match when available
+            if current_round.get("name"):
+                q = q.filter(Round.name == current_round.get("name"))
+            match = q.order_by(Round.created_at.desc()).first()
+            if match:
+                mcq_round_id = match.id
+                # Load MCQ questions for this round
+                mcq_questions = MCQQuestion.query.filter_by(round_id=mcq_round_id).all()
+    except Exception:
+        mcq_round_id = None
+        mcq_questions = []
+
     return render_template("candidate/take_test.html", 
                           schedule=schedule, 
                           plan=plan,
                           current_round=current_round,
-                          round_index=schedule.current_round_index)
+                          round_index=schedule.current_round_index,
+                          mcq_round_id=mcq_round_id,
+                          mcq_questions=mcq_questions)
 
 
 @candidate_bp.route("/test/<int:schedule_id>/submit", methods=["POST"])
@@ -298,9 +374,9 @@ def get_or_create_candidate():
     if not candidate:
         candidate = Candidate(
             user_id=current_user.id,
-            name=current_user.name,
+            name=getattr(current_user, "name", current_user.email),
             email=current_user.email,
-            phone=current_user.phone,
+            phone=getattr(current_user, "phone", None),
             status="profile_created"
         )
         db.session.add(candidate)

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Job Openings - HR{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Job Openings</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('hr_jobs.create_job') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Create Job
+            </a>
+        </div>
+    </div>
+
+    {% if jobs %}
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td><strong>{{ job.title }}</strong></td>
+                    <td>{{ job.department or '-' }}</td>
+                    <td>
+                        {% if job.status == 'open' %}
+                            <span class="badge bg-success">Open</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ job.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ job.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <a href="{{ url_for('hr_jobs.edit_job', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+                        <a href="{{ url_for('hr_jobs.edit_job', job_id=job.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No job openings created yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}{{ candidate.name }} - Interviewer{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div>
+                <h1 class="mb-2">{{ candidate.name }}</h1>
+                <p class="text-muted mb-3">
+                    <span class="badge bg-info">{{ experience_level|capitalize }}</span>
+                    <span class="badge bg-secondary">{{ candidate.status }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('interviewer.list_candidates') }}" class="btn btn-outline-secondary">
+                ← Back to Candidates
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Candidate Information -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Email:</dt>
+                        <dd class="col-sm-8">{{ candidate.email }}</dd>
+
+                        <dt class="col-sm-4">Phone:</dt>
+                        <dd class="col-sm-8">{{ candidate.phone or 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Experience:</dt>
+                        <dd class="col-sm-8">{{ candidate.experience_years }} years</dd>
+
+                        <dt class="col-sm-4">Experience Level:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-info">{{ experience_level|capitalize }}</span>
+                        </dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-secondary">{{ candidate.status }}</span>
+                        </dd>
+
+                        <dt class="col-sm-4">Applied On:</dt>
+                        <dd class="col-sm-8">{{ candidate.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            {% if job %}
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Applied Position</h5>
+                </div>
+                <div class="card-body">
+                    <h6>{{ job.title }}</h6>
+                    <dl class="row small mb-0">
+                        <dt class="col-sm-4">Department:</dt>
+                        <dd class="col-sm-8">{{ job.dept or 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Location:</dt>
+                        <dd class="col-sm-8">{{ job.location or 'N/A' }}</dd>
+
+                        <dt class="col-sm-4">Status:</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-success">{{ job.status }}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Candidate Assessment -->
+        <div class="col-md-6">
+            {% if candidate.match_score > 0 %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Match Score</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <h2 class="display-4 text-primary">{{ candidate.match_score }}%</h2>
+                    </div>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ candidate.match_score }}%;" 
+                             aria-valuenow="{{ candidate.match_score }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            Match Score
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if candidate.resume_path %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Resume</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted small mb-3">{{ candidate.resume_path }}</p>
+                    <a href="/" class="btn btn-sm btn-primary w-100">
+                        View Resume
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if interviews %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Interviews ({{ interviews|length }})</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        {% for interview in interviews %}
+                        <a href="{{ url_for('interviewer.view_interview', interview_id=interview.id) }}" 
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1">{{ interview.round.name if interview.round else 'Interview' }}</h6>
+                                    <p class="text-muted small mb-0">
+                                        {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') if interview.scheduled_at_utc else 'Not scheduled' }}
+                                    </p>
+                                </div>
+                                <span class="badge bg-secondary">{{ interview.status }}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                No interviews scheduled yet.
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('interviewer.assign_interview', candidate_id=candidate.id) }}" class="btn btn-lg btn-success w-100">
+                + Assign Interview
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    dt {
+        font-weight: 600;
+    }
+</style>
+{% endblock %}

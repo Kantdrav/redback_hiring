@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Schedule - HR{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>{% if schedule %}Edit Interview Schedule{% else %}Schedule Interview{% endif %}</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('hr_jobs.list_interview_schedules') }}" class="btn btn-secondary">Back to Schedules</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Candidate</label>
+                        <select class="form-control" name="candidate_id" required>
+                            <option value="">Select Candidate</option>
+                            {% if candidates %}
+                                {% for candidate in candidates %}
+                                <option value="{{ candidate.id }}" {% if schedule and schedule.candidate_id == candidate.id %}selected{% endif %}>
+                                    {{ candidate.name }}
+                                </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Job</label>
+                        <select class="form-control" name="job_id" required>
+                            <option value="">Select Job</option>
+                            {% if jobs %}
+                                {% for job in jobs %}
+                                <option value="{{ job.id }}" {% if schedule and schedule.job_id == job.id %}selected{% endif %}>
+                                    {{ job.title }}
+                                </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Scheduled Date & Time</label>
+                        <input type="datetime-local" class="form-control" name="scheduled_at" 
+                               value="{% if schedule and schedule.scheduled_at %}{{ schedule.scheduled_at.strftime('%Y-%m-%dT%H:%M') }}{% endif %}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" name="status">
+                            <option value="invited" {% if schedule and schedule.status == 'invited' %}selected{% endif %}>Invited</option>
+                            <option value="completed" {% if schedule and schedule.status == 'completed' %}selected{% endif %}>Completed</option>
+                            <option value="cancelled" {% if schedule and schedule.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">
+                            {% if schedule %}Update{% else %}Create{% endif %} Schedule
+                        </button>
+                        <a href="{{ url_for('hr_jobs.list_interview_schedules') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

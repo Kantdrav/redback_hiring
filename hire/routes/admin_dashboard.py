@@ -4,9 +4,10 @@ from flask_login import login_required, current_user
 from utils.rbac import role_required
 from models import (
     db, User, ProgrammingLanguage, QuestionBank, QuestionBankItem, 
-    ScoringPolicy, RoundTemplate, AuditLog
+    ScoringPolicy, RoundTemplate, AuditLog, WebsiteVisit, UserImpersonation
 )
-from datetime import datetime
+from datetime import datetime, timedelta
+from sqlalchemy import func, desc
 import json
 
 admin_dashboard_bp = Blueprint("admin_dashboard", __name__, template_folder="../templates/admin")
@@ -23,9 +24,126 @@ def dashboard():
         "total_languages": ProgrammingLanguage.query.count(),
         "total_question_banks": QuestionBank.query.count(),
         "total_scoring_policies": ScoringPolicy.query.count(),
+        "website_visits_today": WebsiteVisit.query.filter(
+            WebsiteVisit.visited_at >= datetime.utcnow().date()
+        ).count(),
+        "total_website_visits": WebsiteVisit.query.count(),
+        "impersonation_actions_today": UserImpersonation.query.filter(
+            UserImpersonation.created_at >= datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        ).count(),
     }
     recent_logs = AuditLog.query.order_by(AuditLog.created_at.desc()).limit(10).all()
     return render_template("admin/dashboard.html", stats=stats, recent_logs=recent_logs)
+
+
+# ===== WEBSITE VISIT ANALYTICS =====
+@admin_dashboard_bp.route("/analytics")
+@login_required
+@role_required("admin")
+def analytics():
+    """Display website visit analytics and metrics"""
+    page = request.args.get("page", 1, type=int)
+    per_page = 50
+    
+    # Get visit statistics
+    total_visits = WebsiteVisit.query.count()
+    unique_visitors = db.session.query(func.count(func.distinct(WebsiteVisit.user_id))).scalar()
+    unique_ips = db.session.query(func.count(func.distinct(WebsiteVisit.ip_address))).scalar()
+    
+    # Visits today
+    today_visits = WebsiteVisit.query.filter(
+        WebsiteVisit.visited_at >= datetime.utcnow().date()
+    ).count()
+    
+    # Most visited endpoints
+    top_endpoints = db.session.query(
+        WebsiteVisit.endpoint,
+        func.count(WebsiteVisit.id).label('visit_count')
+    ).group_by(WebsiteVisit.endpoint).order_by(
+        desc('visit_count')
+    ).limit(10).all()
+    
+    # Most active users
+    top_users = db.session.query(
+        User,
+        func.count(WebsiteVisit.id).label('visit_count')
+    ).join(WebsiteVisit, WebsiteVisit.user_id == User.id).group_by(
+        User.id
+    ).order_by(desc('visit_count')).limit(10).all()
+    
+    # Recent visits with pagination
+    recent_visits = WebsiteVisit.query.order_by(
+        WebsiteVisit.visited_at.desc()
+    ).paginate(page=page, per_page=per_page)
+    
+    # Hourly visit count (last 24 hours)
+    hourly_visits = {}
+    for i in range(24):
+        hour_start = datetime.utcnow().replace(hour=i, minute=0, second=0, microsecond=0)
+        hour_end = hour_start + timedelta(hours=1)
+        count = WebsiteVisit.query.filter(
+            WebsiteVisit.visited_at >= hour_start,
+            WebsiteVisit.visited_at < hour_end
+        ).count()
+        hourly_visits[i] = count
+    
+    stats = {
+        "total_visits": total_visits,
+        "unique_visitors": unique_visitors,
+        "unique_ips": unique_ips,
+        "today_visits": today_visits,
+    }
+    
+    return render_template(
+        "admin/analytics.html",
+        stats=stats,
+        recent_visits=recent_visits,
+        top_endpoints=top_endpoints,
+        top_users=top_users,
+        hourly_visits=hourly_visits
+    )
+
+
+# ===== IMPERSONATION AUDIT LOG =====
+@admin_dashboard_bp.route("/impersonation-logs")
+@login_required
+@role_required("admin")
+def impersonation_logs():
+    """Display admin impersonation action logs"""
+    page = request.args.get("page", 1, type=int)
+    action_filter = request.args.get("action", None)
+    per_page = 50
+    
+    query = UserImpersonation.query.order_by(UserImpersonation.created_at.desc())
+    
+    if action_filter:
+        query = query.filter_by(action=action_filter)
+    
+    logs = query.paginate(page=page, per_page=per_page)
+    
+    # Get action statistics
+    action_stats = db.session.query(
+        UserImpersonation.action,
+        func.count(UserImpersonation.id).label('count'),
+        func.sum(func.cast(UserImpersonation.status == 'success', db.Integer)).label('success_count')
+    ).group_by(UserImpersonation.action).all()
+    
+    stats = {
+        "total_actions": UserImpersonation.query.count(),
+        "today_actions": UserImpersonation.query.filter(
+            UserImpersonation.created_at >= datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
+        ).count(),
+        "successful_actions": UserImpersonation.query.filter_by(status="success").count(),
+        "failed_actions": UserImpersonation.query.filter_by(status="failed").count(),
+    }
+    
+    return render_template(
+        "admin/impersonation_logs.html",
+        logs=logs,
+        action_stats=action_stats,
+        stats=stats,
+        action_filter=action_filter
+    )
 
 
 # ==================== PROGRAMMING LANGUAGES ====================

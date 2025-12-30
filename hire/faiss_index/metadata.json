@@ -79,5 +79,152 @@
     "text": "projects at Springworks. Selected Projects\n• Quiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\n- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n- Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project\nTechnologies: Python • SQL • pandas\n- Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\n- Designed lead/lag compensators, Bode & Nyquist plots. ",
     "section": "projects",
     "indexed_at": "2025-12-12T12:56:40.767535"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_12",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2025-12-17T10:53:02.134722"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_13",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2025-12-17T10:53:02.134744"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_14",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2025-12-17T10:53:02.134755"
+  },
+  {
+    "candidate_id": 3,
+    "chunk_id": "3_15",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2025-12-17T10:53:02.134764"
+  },
+  {
+    "candidate_id": 4,
+    "chunk_id": "4_16",
+    "text": "Profile\nSoftware Development Engineer (SDE) Intern candidate with strong foundations\nin Data Structures & Algorithms (DSA), backend engineering, and full -stack\n",
+    "section": "summary",
+    "indexed_at": "2025-12-22T07:07:12.834898"
+  },
+  {
+    "candidate_id": 4,
+    "chunk_id": "4_17",
+    "text": "development. Experienced in building production-grade systems, LLM-based\ntools, and scalable microservices. Skilled in Python, JavaScript, FastAPI/Flask, and\nmodern development workflows. Eager to contribute to real-world engineering\nExperience\n• Data Analyst Intern – Infotech (2024, Remote)\n- Conducted market & user research. - Automated data cleaning workflows using Python + SQL. • Vocational Trainee – Team Project (2023)\n- Assisted in documentation, planning, and implementation. Additional Information\n• Strong fundamentals in DSA; proficient in Python/Java/JavaScript\n• Available for full -time 6-month remote internship\n\n• Leadership: Deputy Secretary, Sundarbans House\n• Sports: Cricket — teamwork & strategic thinking\n",
+    "section": "experience",
+    "indexed_at": "2025-12-22T07:07:12.834915"
+  },
+  {
+    "candidate_id": 4,
+    "chunk_id": "4_18",
+    "text": "Education\n• 2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n• 2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n• 2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2025-12-22T07:07:12.834922"
+  },
+  {
+    "candidate_id": 4,
+    "chunk_id": "4_19",
+    "text": "Technical Skills\nLanguages: Python, JavaScript, TypeScript, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, CI/CD basics, Azure, Vercel\nOther: Shell scripting, Excel, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2025-12-22T07:07:12.834928"
+  },
+  {
+    "candidate_id": 4,
+    "chunk_id": "4_20",
+    "text": "projects at Springworks. Selected Projects\n• Quiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\n- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n- Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project\nTechnologies: Python • SQL • pandas\n- Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\n- Designed lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2025-12-22T07:07:12.834933"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_21",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2025-12-26T07:56:25.713411"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_22",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2025-12-26T07:56:25.713435"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_23",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2025-12-26T07:56:25.713444"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_24",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2025-12-26T07:56:25.713452"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_25",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2025-12-26T07:56:25.713460"
+  },
+  {
+    "candidate_id": 6,
+    "chunk_id": "6_26",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2025-12-26T07:56:25.713467"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_27",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2025-12-30T10:47:20.601441"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_28",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2025-12-30T10:47:20.601472"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_29",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2025-12-30T10:47:20.601486"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_30",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2025-12-30T10:47:20.601498"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_31",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2025-12-30T10:47:20.601508"
+  },
+  {
+    "candidate_id": 8,
+    "chunk_id": "8_32",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2025-12-30T10:47:20.601519"
   }
 ]

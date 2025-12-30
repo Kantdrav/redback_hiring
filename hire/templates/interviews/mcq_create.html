@@ -1,57 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %}Create MCQ Question - InterviewFlow{% endblock %}
+{% block title %}Add MCQ Question{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Add MCQ Question</h2>
+            {% if round %}
+                <small class="text-muted">Quiz: {{ round.name }}</small>
+            {% endif %}
+        </div>
+        <a href="{% if round %}{{ url_for('interviews.quiz_questions', round_id=round.id) }}{% else %}{{ url_for('interviews.list_quizzes') }}{% endif %}" class="btn btn-secondary">Back</a>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <h3>Create MCQ Question</h3>
-                </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url_for('interviews.create_mcq', round_id=round_id) }}">
-                        <div class="form-group mb-3">
-                            <label for="question_text">Question</label>
-                            <textarea class="form-control" id="question_text" name="question_text" rows="4" required></textarea>
+                    <form method="POST" action="{{ url_for('interviews.mcq_create', round_id=round_id) }}">
+                        <div class="mb-3">
+                            <label for="question_text" class="form-label">Question Text</label>
+                            <textarea class="form-control" id="question_text" name="question_text" rows="3" placeholder="Enter your question here" required></textarea>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="option_a">Option A</label>
-                            <input type="text" class="form-control" id="option_a" name="option_a" required>
+
+                        <div class="mb-3">
+                            <label class="form-label">Answer Choices</label>
+                            <div class="mb-2">
+                                <label for="choice0" class="form-label small">Choice 1</label>
+                                <input type="text" class="form-control" id="choice0" name="choices" placeholder="Option A" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="choice1" class="form-label small">Choice 2</label>
+                                <input type="text" class="form-control" id="choice1" name="choices" placeholder="Option B" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="choice2" class="form-label small">Choice 3</label>
+                                <input type="text" class="form-control" id="choice2" name="choices" placeholder="Option C" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="choice3" class="form-label small">Choice 4</label>
+                                <input type="text" class="form-control" id="choice3" name="choices" placeholder="Option D" required>
+                            </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="option_b">Option B</label>
-                            <input type="text" class="form-control" id="option_b" name="option_b" required>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label for="correct_index" class="form-label">Correct Answer (0-3)</label>
+                                <input type="number" class="form-control" id="correct_index" name="correct_index" min="0" max="3" value="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="marks" class="form-label">Marks</label>
+                                <input type="number" class="form-control" id="marks" name="marks" step="0.5" min="0.5" value="1.0" required>
+                            </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="option_c">Option C</label>
-                            <input type="text" class="form-control" id="option_c" name="option_c" required>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">Add Question</button>
+                            <a href="{% if round %}{{ url_for('interviews.quiz_questions', round_id=round.id) }}{% else %}{{ url_for('interviews.list_quizzes') }}{% endif %}" class="btn btn-secondary">Cancel</a>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="option_d">Option D</label>
-                            <input type="text" class="form-control" id="option_d" name="option_d" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="correct_answer">Correct Answer</label>
-                            <select class="form-control" id="correct_answer" name="correct_answer" required>
-                                <option value="">Select correct option</option>
-                                <option value="A">Option A</option>
-                                <option value="B">Option B</option>
-                                <option value="C">Option C</option>
-                                <option value="D">Option D</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="difficulty">Difficulty Level</label>
-                            <select class="form-control" id="difficulty" name="difficulty">
-                                <option value="easy">Easy</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Create Question</button>
-                        <a href="{{ url_for('interviews.interviewer_dashboard') }}" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Interviews{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Interview Invitations</h2>
+        <a href="{{ url_for('candidate.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <!-- Interviewer-Assigned Interviews -->
+    {% if interviews %}
+    <div class="mb-4">
+        <h5 class="mb-3">Assigned Interviews</h5>
+        <div class="row">
+            {% for interview in interviews %}
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="card-title mb-0">Interview Assignment</h6>
+                            <span class="badge bg-{% if interview.status == 'completed' %}success{% elif interview.status == 'scheduled' %}info{% else %}secondary{% endif %}">
+                                {{ interview.status|capitalize }}
+                            </span>
+                        </div>
+                        <p class="text-muted small mb-2">
+                            Assigned by: {{ interview.interviewer.name if interview.interviewer else 'Interviewer' }}
+                        </p>
+                        <p class="mb-2">
+                            <strong>Round:</strong> {{ interview.round.name if interview.round else 'Round #' ~ interview.round_id }}
+                        </p>
+                        {% if interview.scheduled_at_utc %}
+                        <p class="mb-2">
+                            <strong>Scheduled:</strong> {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') }}
+                        </p>
+                        {% endif %}
+                        
+                        {% if interview.status == 'scheduled' %}
+                        <a href="{{ url_for('interviews.execute', interview_id=interview.id) }}" class="btn btn-sm btn-primary">
+                            Take Interview
+                        </a>
+                        {% elif interview.status == 'completed' %}
+                        <span class="badge bg-success">Completed</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Interview Schedules (Legacy) -->
+    {% if schedules %}
+        <h5 class="mb-3">Scheduled Interviews</h5>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Status</th>
+                        <th>Round</th>
+                        <th>Invited</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in schedules %}
+                        <tr>
+                            <td>{{ s.interview_plan.name if s.interview_plan else 'Plan' }}</td>
+                            <td><span class="badge bg-info text-uppercase">{{ s.status }}</span></td>
+                            <td>{{ s.current_round_index + 1 }}</td>
+                            <td>{{ s.invited_at.strftime('%Y-%m-%d') if s.invited_at else 'N/A' }}</td>
+                            <td>
+                                {% if s.status == 'invited' %}
+                                    <form action="{{ url_for('candidate.accept_interview', schedule_id=s.id) }}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                                    </form>
+                                    <form action="{{ url_for('candidate.decline_interview', schedule_id=s.id) }}" method="post" class="d-inline ms-1">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Decline</button>
+                                    </form>
+                                {% elif s.status == 'in_progress' %}
+                                    {% if mcq_round_map and mcq_round_map.get(s.id) %}
+                                        <a href="{{ url_for('interviews.mcq_take', round_id=mcq_round_map.get(s.id)) }}" class="btn btn-primary btn-sm">Take MCQ</a>
+                                    {% else %}
+                                        <a href="{{ url_for('candidate.take_test', schedule_id=s.id) }}" class="btn btn-primary btn-sm">Continue</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ url_for('candidate.view_interview_outcome', schedule_id=s.id) }}" class="btn btn-outline-secondary btn-sm">View Outcome</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    {% if not interviews and not schedules %}
+        <div class="alert alert-info">No interview invitations yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

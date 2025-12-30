@@ -155,6 +155,11 @@
                 <a href="{{ url_for('rag.upload_resume') }}" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Back to Upload
                 </a>
+                {% if candidate.resume_path %}
+                <a href="{{ url_for('rag.download_resume', candidate_id=candidate.id) }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-download"></i> Download Resume PDF
+                </a>
+                {% endif %}
                 {% if current_user.role == 'admin' or current_user.role == 'hr' %}
                 <a href="{{ url_for('admin_users.list_users') }}" class="btn btn-primary">
                     <i class="fas fa-users"></i> Manage Candidates

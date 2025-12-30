@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Create New Quiz{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Create New Quiz</h2>
+        <a href="{{ url_for('interviews.list_quizzes') }}" class="btn btn-secondary">Back to Quizzes</a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Quiz Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="e.g., Python Fundamentals" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Quiz Type</label>
+                            <select name="type" class="form-control" required>
+                                <option value="">Select type</option>
+                                <option value="mcq">Multiple Choice (MCQ)</option>
+                                <option value="technical">Technical Assessment</option>
+                                <option value="coding">Coding Challenge</option>
+                                <option value="hr">HR Round</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Duration (minutes)</label>
+                            <input type="number" name="duration" class="form-control" value="30" min="5" max="300">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Configuration (JSON, optional)</label>
+                            <textarea name="config_json" class="form-control" rows="4" placeholder="{}">{}</textarea>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Create Quiz</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

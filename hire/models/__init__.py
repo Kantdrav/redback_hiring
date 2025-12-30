@@ -12,7 +12,7 @@ from .mcq_question import MCQQuestion
 # Admin Models
 from .admin_models import (
     ProgrammingLanguage, QuestionBank, QuestionBankItem,
-    ScoringPolicy, RoundTemplate
+    ScoringPolicy, RoundTemplate, WebsiteVisit, UserImpersonation
 )
 
 # HR Models
@@ -27,7 +27,7 @@ __all__ = [
     "Round", "Interview", "Assessment", "MCQQuestion",
     # Admin models
     "ProgrammingLanguage", "QuestionBank", "QuestionBankItem",
-    "ScoringPolicy", "RoundTemplate",
+    "ScoringPolicy", "RoundTemplate", "WebsiteVisit", "UserImpersonation",
     # HR models
     "InterviewPlan", "InterviewSchedule", "CandidateTestResult"
 ]

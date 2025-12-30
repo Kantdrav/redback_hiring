@@ -15,7 +15,6 @@
 **Key Files:**
 - `app.py` - Application factory
 - `models/` - All ORM models
-- `auth.py` - Authentication & login
 - `utils/rbac.py` - Role-based decorators
 
 ---
@@ -25,9 +24,7 @@
 - MCQ (Multiple Choice Question) management
 - Interview assessment tracking
 - Interviewer dashboard
-- Role-based interview access
 
-**Key Files:**
 - `routes/interviews.py` - Interview management routes
 - `services/interview_engine.py` - Interview logic
 - `services/mcq_engine.py` - MCQ grading

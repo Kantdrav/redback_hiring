@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Assign Interview - {{ candidate.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-2">Assign Interview</h1>
+            <p class="text-muted">Assigning interview to: <strong>{{ candidate.name }}</strong></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('interviewer.view_candidate', candidate_id=candidate.id) }}" class="btn btn-outline-secondary">
+                ← Back to Candidate
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Select Round & Quiz</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation">
+                        <div class="mb-3">
+                            <label for="round_number" class="form-label">Select Round Number <span class="text-danger">*</span></label>
+                            <select class="form-select" id="round_number" name="round_number" required>
+                                <option value="">-- Choose Round --</option>
+                                <option value="1">Round 1</option>
+                                <option value="2">Round 2</option>
+                                <option value="3">Round 3</option>
+                                <option value="4">Round 4</option>
+                                <option value="5">Round 5</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="round_id" class="form-label">Select Quiz/Test <span class="text-danger">*</span></label>
+                            <select class="form-select" id="round_id" name="round_id" required>
+                                <option value="">-- Choose a Quiz/Test --</option>
+                                {% for round in rounds %}
+                                <option value="{{ round.id }}">{{ round.name }} ({{ round.type|upper }})</option>
+                                {% endfor %}
+                            </select>
+                            {% if not rounds %}
+                            <small class="text-warning">No quizzes/rounds available. Please create one first.</small>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="scheduled_at" class="form-label">Schedule Interview (Optional)</label>
+                            <input type="datetime-local" class="form-control" id="scheduled_at" name="scheduled_at">
+                            <small class="text-muted">Leave empty to schedule later</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Candidate Details</label>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <p class="mb-1"><strong>Name:</strong> {{ candidate.name }}</p>
+                                    <p class="mb-1"><strong>Email:</strong> {{ candidate.email }}</p>
+                                    <p class="mb-1"><strong>Experience:</strong> {{ candidate.experience_years }} years</p>
+                                    <p class="mb-0"><strong>Status:</strong> <span class="badge bg-secondary">{{ candidate.status }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="reset" class="btn btn-outline-secondary">Clear</button>
+                            <button type="submit" class="btn btn-primary" {% if not rounds %}disabled{% endif %}>
+                                Assign Interview
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">About Assignments</h5>
+                </div>
+                <div class="card-body">
+                    <h6>What happens when you assign an interview?</h6>
+                    <ul class="small">
+                        <li>The candidate will receive the quiz/interview</li>
+                        <li>You can optionally set a scheduled date and time</li>
+                        <li>The interview will appear in your "Assigned Interviews" list</li>
+                        <li>You can modify or cancel anytime</li>
+                    </ul>
+
+                    <h6 class="mt-3">Available Quizzes/Rounds</h6>
+                    {% if rounds %}
+                    <div class="list-group list-group-sm">
+                        {% for round in rounds %}
+                        <a href="#" class="list-group-item list-group-item-action small">
+                            <strong>{{ round.name }}</strong>
+                            {% if round.description %}
+                            <br><small class="text-muted">{{ round.description[:50] }}...</small>
+                            {% endif %}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning small mb-0">
+                        No quizzes/rounds created yet. Contact HR to create some.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .list-group-sm .list-group-item {
+        padding: 0.5rem 0.75rem;
+    }
+</style>
+
+<script>
+    // Set minimum datetime to now
+    document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        document.getElementById('scheduled_at').min = now.toISOString().slice(0, 16);
+    });
+</script>
+{% endblock %}

@@ -14,3 +14,5 @@ class Interview(db.Model):
 
     # convenience relationships
     round = db.relationship("Round", backref="interviews", lazy=True)
+    candidate = db.relationship("Candidate", backref="interviews", lazy=True)
+    interviewer = db.relationship("User", backref="interviews_conducted", lazy=True)
