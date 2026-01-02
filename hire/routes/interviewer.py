@@ -83,13 +83,17 @@ def view_interview(interview_id):
 # ==================== GRADING & ASSESSMENT ====================
 @interviewer_bp.route("/interviews/<int:interview_id>/grade", methods=["GET", "POST"])
 @login_required
-@role_required("interviewer")
+@role_required("interviewer", "admin", "hr")
 def grade_interview(interview_id):
     """Grade an interview (manual task grading)"""
     interview = Interview.query.get_or_404(interview_id)
     
-    # Check authorization
-    if interview.interviewer_id != current_user.id:
+    # Check authorization: any interviewer, admin/HR
+    role = getattr(current_user, "role", None)
+    is_interviewer_role = role == "interviewer"
+    is_admin_or_hr = role in ("admin", "hr")
+    
+    if not (is_interviewer_role or is_admin_or_hr):
         flash("You don't have permission to grade this interview", "danger")
         return redirect(url_for("interviewer.list_interviews"))
     
@@ -97,10 +101,15 @@ def grade_interview(interview_id):
     
     if request.method == "POST":
         score = request.form.get("score", type=float)
+        status = request.form.get("status", "").strip()
         feedback = request.form.get("feedback", "").strip()
         
         if score is None or score < 0 or score > 100:
             flash("Score must be between 0 and 100", "danger")
+            return redirect(url_for("interviewer.grade_interview", interview_id=interview_id))
+        
+        if status not in ["passed", "failed"]:
+            flash("Please select Pass or Fail status", "danger")
             return redirect(url_for("interviewer.grade_interview", interview_id=interview_id))
         
         if not assessment:
@@ -108,7 +117,9 @@ def grade_interview(interview_id):
             db.session.add(assessment)
         
         assessment.score_numeric = score
-        assessment.feedback_text = feedback
+        # Store status in feedback for now (can be expanded to separate field if needed)
+        status_text = "PASSED ✓" if status == "passed" else "FAILED ✗"
+        assessment.feedback_text = f"{status_text}\n\n{feedback}" if feedback else status_text
         assessment.submitted_by = current_user.id
         assessment.submitted_at = datetime.utcnow()
         
@@ -118,7 +129,7 @@ def grade_interview(interview_id):
         db.session.commit()
         
         log_interviewer_action("grade", "interview", interview_id, current_user.id, 
-                              {"score": score})
+                              {"score": score, "status": status})
         
         flash("Interview graded successfully", "success")
         return redirect(url_for("interviewer.view_interview", interview_id=interview_id))

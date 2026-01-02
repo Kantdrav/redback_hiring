@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Grade Interview{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Grade Interview</h2>
+        <a href="{{ url_for('interviewer.view_interview', interview_id=interview.id) }}" class="btn btn-secondary">Back</a>
+    </div>
+
+    <!-- Interview Info -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Interview Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Candidate:</strong> {{ interview.candidate.name if interview.candidate else 'N/A' }}</p>
+                    <p><strong>Email:</strong> {{ interview.candidate.email if interview.candidate else 'N/A' }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Round:</strong> {{ interview.round.name if interview.round else 'Round #' ~ interview.round_id }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-info">{{ interview.status|capitalize }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grade Form -->
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">{% if assessment and assessment.score_numeric %}Update Grade{% else %}Assign Grade{% endif %}</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-4">
+                    <label for="score" class="form-label"><strong>Score (0-100)</strong></label>
+                    <input type="number" 
+                           class="form-control form-control-lg" 
+                           id="score" 
+                           name="score" 
+                           min="0" 
+                           max="100" 
+                           step="0.5"
+                           value="{% if assessment and assessment.score_numeric %}{{ assessment.score_numeric }}{% endif %}"
+                           required>
+                    <small class="text-muted">Enter a score between 0 and 100</small>
+                </div>
+
+                <div class="mb-4">
+                    <label for="status" class="form-label"><strong>Pass/Fail Status</strong></label>
+                    <select class="form-control form-control-lg" id="status" name="status" required>
+                        <option value="">-- Select Status --</option>
+                        <option value="passed" {% if assessment and assessment.feedback_text and 'PASSED' in assessment.feedback_text or assessment.score_numeric and assessment.score_numeric >= 40 %}selected{% endif %}>Passed</option>
+                        <option value="failed" {% if assessment and assessment.feedback_text and 'FAILED' in assessment.feedback_text or assessment.score_numeric and assessment.score_numeric < 40 %}selected{% endif %}>Failed</option>
+                    </select>
+                    <small class="text-muted">Mark whether the candidate passed or failed the interview</small>
+                </div>
+
+                <div class="mb-4">
+                    <label for="feedback" class="form-label"><strong>Feedback</strong></label>
+                    <textarea class="form-control" 
+                              id="feedback" 
+                              name="feedback" 
+                              rows="6"
+                              placeholder="Provide detailed feedback for the candidate...">{% if assessment and assessment.feedback_text %}{{ assessment.feedback_text }}{% endif %}</textarea>
+                    <small class="text-muted">Optional feedback about the interview performance</small>
+                </div>
+
+                {% if assessment and assessment.score_numeric %}
+                <p class="text-muted small mb-3">
+                    <strong>Current Score:</strong> {{ assessment.score_numeric }}/100 
+                    | <strong>Submitted:</strong> {{ assessment.submitted_at.strftime('%Y-%m-%d %H:%M') if assessment.submitted_at else 'N/A' }}
+                </p>
+                {% endif %}
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-lg btn-success">
+                        {% if assessment and assessment.score_numeric %}Update Grade{% else %}Assign Grade{% endif %}
+                    </button>
+                    <a href="{{ url_for('interviewer.view_interview', interview_id=interview.id) }}" class="btn btn-lg btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
