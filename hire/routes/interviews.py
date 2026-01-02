@@ -312,10 +312,67 @@ def mcq_take_interview(interview_id):
         
         flash(f"MCQ submitted. Score: {res['obtained_marks']} / {res['total_marks']}", "success")
         
-        # Redirect based on role
-        if current_user.role == "candidate":
-            return redirect(url_for("candidate.view_interviews"))
-        else:
-            return redirect(url_for("interviews.interviewer_dashboard"))
+        # Redirect to results page
+        return redirect(url_for("interviews.view_assessment_results", interview_id=interview_id))
     
     return render_template("interviews/mcq_take.html", questions=qs, round_id=round_id, interview=iv)
+
+
+@interviews_bp.route("/assessment/<int:interview_id>/results")
+@login_required
+def view_assessment_results(interview_id):
+    """View detailed assessment results with candidate answers"""
+    from models import Assessment, MCQQuestion
+    
+    iv = Interview.query.get_or_404(interview_id)
+    
+    # Authorization check: allow candidate, any interviewer role, admin/HR
+    is_candidate = False
+    if current_user.role == "candidate" and iv.candidate:
+        if iv.candidate.user_id == current_user.id or iv.candidate.email == current_user.email:
+            is_candidate = True
+
+    role = getattr(current_user, "role", None)
+    is_interviewer_role = role == "interviewer"
+    is_admin_or_hr = role in ("admin", "hr")
+
+    if not (is_candidate or is_interviewer_role or is_admin_or_hr):
+        flash("Not authorized to view these results", "danger")
+        return redirect(url_for("interviews.interviewer_dashboard") if role == "interviewer" else url_for("candidate.view_interviews"))
+    
+    assessment = Assessment.query.filter_by(interview_id=interview_id).first()
+    if not assessment:
+        flash("No assessment found for this interview", "warning")
+        return redirect(url_for("interviews.interviewer_dashboard") if current_user.role == "interviewer" else url_for("candidate.view_interviews"))
+    
+    # Parse score details
+    score_detail = assessment.get_score_json()
+    detail = score_detail.get("detail", {})
+    answers = score_detail.get("answers", {})
+    total_marks = score_detail.get("total_marks", 0)
+    obtained_marks = score_detail.get("obtained_marks", 0)
+    percentage = (obtained_marks / total_marks * 100) if total_marks > 0 else 0
+    
+    # Determine pass/fail status (assuming 40% is passing)
+    passed_status = "PASSED ✓" if percentage >= 40 else "FAILED ✗"
+    
+    # Get all questions for this round (ordered by creation)
+    questions = MCQQuestion.query.filter_by(round_id=iv.round_id).order_by(MCQQuestion.id).all()
+    
+    # Parse candidate answers from score_json
+    candidate_answers = {}
+    for q in questions:
+        q_str = str(q.id)
+        if q_str in answers:
+            candidate_answers[q.id] = int(answers[q_str])
+    
+    return render_template("interviews/assessment_results.html",
+                          interview=iv,
+                          assessment=assessment,
+                          score_detail=detail,
+                          total_marks=total_marks,
+                          obtained_marks=obtained_marks,
+                          percentage=percentage,
+                          passed_status=passed_status,
+                          questions=questions,
+                          candidate_answers=candidate_answers)

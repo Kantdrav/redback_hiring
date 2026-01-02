@@ -33,13 +33,23 @@
                             <strong>Scheduled:</strong> {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') }}
                         </p>
                         {% endif %}
+                        {% if interview.assessments %}
+                            {% set assessment = interview.assessments[0] %}
+                            {% if assessment.score_numeric %}
+                            <p class="mb-2">
+                                <strong>Score:</strong> <span class="badge bg-success">{{ assessment.score_numeric }}/100</span>
+                            </p>
+                            {% endif %}
+                        {% endif %}
                         
                         {% if interview.status == 'scheduled' %}
                         <a href="{{ url_for('interviews.execute', interview_id=interview.id) }}" class="btn btn-sm btn-primary">
                             Take Interview
                         </a>
                         {% elif interview.status == 'completed' %}
-                        <span class="badge bg-success">Completed</span>
+                        <a href="{{ url_for('interviews.view_assessment_results', interview_id=interview.id) }}" class="btn btn-sm btn-success">
+                            View Results
+                        </a>
                         {% endif %}
                     </div>
                 </div>

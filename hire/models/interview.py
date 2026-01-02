@@ -16,3 +16,4 @@ class Interview(db.Model):
     round = db.relationship("Round", backref="interviews", lazy=True)
     candidate = db.relationship("Candidate", backref="interviews", lazy=True)
     interviewer = db.relationship("User", backref="interviews_conducted", lazy=True)
+    assessments = db.relationship("Assessment", backref="interview", lazy=True)

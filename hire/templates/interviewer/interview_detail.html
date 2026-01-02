@@ -109,6 +109,11 @@
                     {% if assessment.submitted_at %}
                     <p class="text-muted small">Submitted: {{ assessment.submitted_at.strftime('%Y-%m-%d %H:%M') }}</p>
                     {% endif %}
+                    {% if assessment.score_numeric %}
+                    <a href="{{ url_for('interviews.view_assessment_results', interview_id=interview.id) }}" class="btn btn-sm btn-info mt-2">
+                        View Detailed Results
+                    </a>
+                    {% endif %}
                 </div>
             </div>
             {% else %}

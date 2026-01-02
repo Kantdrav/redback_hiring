@@ -25,7 +25,12 @@
                             <strong>Round {{ result.round_index + 1 }}</strong>
                             <div class="text-muted">Submitted {{ result.submitted_at.strftime('%Y-%m-%d %H:%M') if result.submitted_at else 'N/A' }}</div>
                         </div>
-                        <span class="badge bg-secondary">{{ result.status or 'pending_review' }}</span>
+                        <div>
+                            {% if result.score %}
+                            <span class="badge bg-success me-2">Score: {{ result.score }}/100</span>
+                            {% endif %}
+                            <span class="badge bg-secondary">{{ result.status or 'pending_review' }}</span>
+                        </div>
                     </div>
                     {% if result.test_data_json %}
                         <pre class="mt-2 mb-0 small bg-light p-2">{{ result.test_data_json }}</pre>

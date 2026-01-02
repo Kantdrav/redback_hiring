@@ -127,13 +127,23 @@
                         <a href="{{ url_for('interviewer.view_interview', interview_id=interview.id) }}" 
                            class="list-group-item list-group-item-action">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
+                                <div class="flex-grow-1">
                                     <h6 class="mb-1">{{ interview.round.name if interview.round else 'Interview' }}</h6>
                                     <p class="text-muted small mb-0">
                                         {{ interview.scheduled_at_utc.strftime('%Y-%m-%d %H:%M') if interview.scheduled_at_utc else 'Not scheduled' }}
                                     </p>
                                 </div>
-                                <span class="badge bg-secondary">{{ interview.status }}</span>
+                                <div class="text-end">
+                                    {% if interview.assessments %}
+                                        {% set assessment = interview.assessments[0] %}
+                                        {% if assessment.score_numeric %}
+                                        <div class="mb-2">
+                                            <span class="badge bg-success">Score: {{ assessment.score_numeric }}/100</span>
+                                        </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    <span class="badge bg-secondary">{{ interview.status }}</span>
+                                </div>
                             </div>
                         </a>
                         {% endfor %}

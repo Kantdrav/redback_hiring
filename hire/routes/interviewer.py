@@ -57,13 +57,17 @@ def list_interviews():
 
 @interviewer_bp.route("/interviews/<int:interview_id>")
 @login_required
-@role_required("interviewer")
+@role_required("interviewer", "admin", "hr")
 def view_interview(interview_id):
-    """View interview details"""
+    """View interview details (interviewer + admin/HR)"""
     interview = Interview.query.get_or_404(interview_id)
     
-    # Check authorization
-    if interview.interviewer_id != current_user.id:
+    # Check authorization: any interviewer, or admin/HR
+    user_role = getattr(current_user, "role", None)
+    is_admin_or_hr = user_role in ("admin", "hr")
+    is_interviewer_role = user_role == "interviewer"
+
+    if not (is_admin_or_hr or is_interviewer_role):
         flash("You don't have permission to view this interview", "danger")
         return redirect(url_for("interviewer.list_interviews"))
     

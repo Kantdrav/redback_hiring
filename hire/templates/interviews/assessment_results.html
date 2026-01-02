@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Assessment Results{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Assessment Results</h2>
+        <a href="{{ request.referrer or url_for('interviews.interviewer_dashboard') }}" class="btn btn-secondary">Back</a>
+    </div>
+
+    <!-- Interview Summary -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Interview Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Candidate:</strong> {{ interview.candidate.name if interview.candidate else 'N/A' }}</p>
+                    <p><strong>Email:</strong> {{ interview.candidate.email if interview.candidate else 'N/A' }}</p>
+                    <p><strong>Round:</strong> {{ interview.round.name if interview.round else 'Round #' ~ interview.round_id }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Interviewer:</strong> {{ interview.interviewer.name if interview.interviewer else 'N/A' }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-success">{{ interview.status|capitalize }}</span></p>
+                    <p><strong>Submitted:</strong> {{ assessment.submitted_at.strftime('%Y-%m-%d %H:%M') if assessment.submitted_at else 'N/A' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Score Summary -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Score Summary</h5>
+        </div>
+        <div class="card-body">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <h3 class="display-5 text-success">{{ assessment.score_numeric|int }}/{{ total_marks|int }}</h3>
+                    <p class="text-muted">Total Score</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="display-5 text-info">{{ percentage|round(2) }}%</h3>
+                    <p class="text-muted">Percentage</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="display-5">{{ passed_status }}</h3>
+                    <p class="text-muted">Status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Question Results -->
+    {% if score_detail %}
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Question-wise Results</h5>
+        </div>
+        <div class="card-body">
+            {% for q in questions %}
+                {% set result = score_detail.get(q.id|string, {}) %}
+                {% set choices = q.get_choices() %}
+                <div class="card mb-3" style="border-left: 5px solid {% if result.get('correct') %}#28a745{% else %}#dc3545{% endif %};">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="flex-grow-1">
+                                <h6 class="card-title">Question {{ loop.index }}</h6>
+                                <p class="mb-2">{{ q.question_text }}</p>
+                                
+                                <!-- Options -->
+                                <div class="mb-3">
+                                    {% for i in range(choices|length) %}
+                                        {% set option = choices[i] %}
+                                        {% set is_selected = candidate_answers.get(q.id)|int == i %}
+                                        {% set is_correct = q.correct_index == i %}
+                                        <div class="form-check mb-2">
+                                            <div class="option-box p-2 rounded {% if is_selected and is_correct %}bg-success text-white{% elif is_selected and not is_correct %}bg-danger text-white{% elif is_correct %}bg-light border border-success{% else %}bg-light{% endif %}">
+                                                <input class="form-check-input" type="radio" disabled 
+                                                    {% if is_selected %}checked{% endif %}>
+                                                <label class="form-check-label ms-2">
+                                                    {{ option }}
+                                                    {% if is_correct %}<span class="badge bg-success float-end">✓ Correct</span>{% endif %}
+                                                    {% if is_selected and not is_correct %}<span class="badge bg-danger float-end">✗ Your answer</span>{% endif %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <!-- Marks -->
+                            <div class="text-end ms-3">
+                                <div class="mb-2">
+                                    {% if result.get('correct') %}
+                                        <span class="badge bg-success">Correct</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Incorrect</span>
+                                    {% endif %}
+                                </div>
+                                <p class="text-muted small mb-0">
+                                    Marks: <strong>{{ result.get('marks_awarded', 0)|int }}/{{ q.marks|int }}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Feedback -->
+    {% if assessment.feedback_text %}
+    <div class="card mt-4">
+        <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">Feedback</h5>
+        </div>
+        <div class="card-body">
+            <p>{{ assessment.feedback_text }}</p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .option-box {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}
