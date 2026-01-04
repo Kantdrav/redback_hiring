@@ -4,8 +4,8 @@ services:
     env: python
     plan: free
     rootDir: hire
-    buildCommand: pip install -r requirements.txt && pip install torch --index-url https://download.pytorch.org/whl/cpu
-    startCommand: gunicorn "app:create_app()" --bind 0.0.0.0:$PORT --workers 3
+    buildCommand: 'pip install -r requirements.txt && pip install torch --index-url https://download.pytorch.org/whl/cpu'
+    startCommand: 'gunicorn "app:create_app()" --bind 0.0.0.0:$PORT --workers 3'
     envVars:
       - key: SECRET_KEY
         value: dev-secret-key-change-in-production
