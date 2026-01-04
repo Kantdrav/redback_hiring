@@ -3,6 +3,7 @@ services:
     name: interviewflow
     env: python
     plan: free
+    rootDir: hire
     buildCommand: pip install -r requirements.txt && pip install torch --index-url https://download.pytorch.org/whl/cpu
     startCommand: gunicorn "app:create_app()" --bind 0.0.0.0:$PORT --workers 3
     envVars:
