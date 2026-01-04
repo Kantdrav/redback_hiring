@@ -18,5 +18,8 @@ Werkzeug==2.3.7
 gunicorn==21.2.0
 pandas>=2.0.0
 
-# MySQL driver for SQLAlchemy
+# MySQL driver for SQLAlchemy (local development)
 PyMySQL==1.1.1
+
+# PostgreSQL driver for SQLAlchemy (Render deployment)
+psycopg2-binary==2.9.9

@@ -109,6 +109,31 @@
 - **Authentication**: Flask-Login
 - **Python**: 3.13
 
+## 🚀 Deploy to Cloud Run (GCP)
+
+1) **Prereqs**: Install gcloud CLI, select project, and set region: `gcloud config set project YOUR_PROJECT && gcloud config set run/region YOUR_REGION`.
+2) **Build & push**: `gcloud builds submit --tag gcr.io/YOUR_PROJECT/interviewflow` (uses Dockerfile in repo root).
+3) **Deploy**:
+    ```bash
+    gcloud run deploy interviewflow \
+       --image gcr.io/YOUR_PROJECT/interviewflow \
+       --platform managed \
+       --allow-unauthenticated \
+       --set-env-vars "SECRET_KEY=dev-secret-key-change-in-production" \
+       --set-env-vars "MYSQL_USER=ravi,MYSQL_PASSWORD=Ravi@1234,MYSQL_HOST=REPLACE_WITH_DB_HOST,MYSQL_PORT=3306,MYSQL_DB=interviewflow"
+    ```
+    Replace `REPLACE_WITH_DB_HOST` with your MySQL host (Cloud SQL connection name via `/cloudsql/PROJECT:REGION:INSTANCE` or a reachable IP). Do not use `localhost` on Cloud Run.
+4) **Migrations/init**: Run a one-off job to create tables if needed:
+    ```bash
+    gcloud run jobs create db-init \
+       --image gcr.io/YOUR_PROJECT/interviewflow \
+       --region YOUR_REGION \
+       --command "/bin/sh" \
+       --args "-c","python -c 'from app import create_app; from models import db; app=create_app(); app.app_context().push(); db.create_all()'"
+    gcloud run jobs execute db-init --region YOUR_REGION
+    ```
+5) **Uploads/FAISS persistence**: Cloud Run disk is ephemeral. Store resumes/indices in Cloud Storage and set `UPLOAD_FOLDER` accordingly, or expect them to reset on redeploy/scale.
+
 ### Project Structure
 ```
 hire/
