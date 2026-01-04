@@ -44,14 +44,6 @@ def load_metadata():
         import faiss
         FAISS_INDEX = faiss.read_index(str(INDEX_FILE))
     return METADATA, FAISS_INDEX
-else:
-    METADATA = []
-
-# faiss index loader/creator
-if INDEX_FILE.exists():
-    index = faiss.read_index(str(INDEX_FILE))
-else:
-    index = None
 
 def save_index_and_meta():
     if index is not None:
