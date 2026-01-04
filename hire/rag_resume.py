@@ -5,9 +5,6 @@ from flask import Blueprint, request, current_app, jsonify, render_template, red
 from werkzeug.utils import secure_filename
 from models import db, Candidate, Job
 from utils_pdf import extract_pdf_text, extract_sections
-from sentence_transformers import SentenceTransformer
-import numpy as np
-import faiss
 from datetime import datetime
 from pathlib import Path
 from flask_login import login_required, current_user
@@ -21,13 +18,32 @@ VEC_DIR.mkdir(exist_ok=True)
 META_FILE = VEC_DIR / "metadata.json"
 INDEX_FILE = VEC_DIR / "faiss.index"
 
-# load embedding model (miniLM)
-EMBED_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+# Lazy-load heavy ML models to reduce memory at startup
+EMBED_MODEL = None
+FAISS_INDEX = None
+METADATA = None
 
-# metadata: list of dicts: {"candidate_id": int, "chunk_id": str, "text": "...", "section": "..."}
-if META_FILE.exists():
-    with open(META_FILE, "r", encoding="utf-8") as f:
-        METADATA = json.load(f)
+def get_embed_model():
+    """Lazy-load embedding model on first use"""
+    global EMBED_MODEL
+    if EMBED_MODEL is None:
+        from sentence_transformers import SentenceTransformer
+        EMBED_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+    return EMBED_MODEL
+
+def load_metadata():
+    """Lazy-load metadata and index on first use"""
+    global METADATA, FAISS_INDEX
+    if METADATA is None:
+        if META_FILE.exists():
+            with open(META_FILE, "r", encoding="utf-8") as f:
+                METADATA = json.load(f)
+        else:
+            METADATA = []
+    if FAISS_INDEX is None and INDEX_FILE.exists():
+        import faiss
+        FAISS_INDEX = faiss.read_index(str(INDEX_FILE))
+    return METADATA, FAISS_INDEX
 else:
     METADATA = []
 
@@ -150,19 +166,23 @@ def index_resume_candidate(candidate_id: int, file_path: str):
         if not chunks:
             raise ValueError("Could not create chunks from resume text")
         
-        embeddings = EMBED_MODEL.encode(chunks, show_progress_bar=False, convert_to_numpy=True)
+        embed_model = get_embed_model()
+        embeddings = embed_model.encode(chunks, show_progress_bar=False, convert_to_numpy=True)
         d = embeddings.shape[1]
         if index is None:
+            import faiss
             index = faiss.IndexFlatIP(d)
         
         # normalize for cosine similarity
+        import faiss
         faiss.normalize_L2(embeddings)
         index.add(embeddings)
 
         # add metadata entries
-        start_idx = len(METADATA)
+        metadata, _ = load_metadata()
+        start_idx = len(metadata)
         for i, (chunk, section) in enumerate(zip(chunks, chunk_sections)):
-            METADATA.append({
+            metadata.append({
                 "candidate_id": candidate_id,
                 "chunk_id": f"{candidate_id}_{i+start_idx}",
                 "text": chunk[:3000],
@@ -215,19 +235,22 @@ def semantic_search(query, candidate_id=None, top_k=10):
     Search FAISS index for relevant chunks
     Optionally filter by candidate_id
     """
-    if index is None or len(METADATA) == 0:
+    metadata, faiss_index = load_metadata()
+    if faiss_index is None or len(metadata) == 0:
         return []
     
     try:
-        emb = EMBED_MODEL.encode([query], convert_to_numpy=True)
+        embed_model = get_embed_model()
+        emb = embed_model.encode([query], convert_to_numpy=True)
+        import faiss
         faiss.normalize_L2(emb)
-        D, I = index.search(emb, min(top_k * 2, len(METADATA)))  # search more, then filter
+        D, I = faiss_index.search(emb, min(top_k * 2, len(metadata)))  # search more, then filter
         
         results = []
         for score, idx in zip(D[0], I[0]):
-            if idx < 0 or idx >= len(METADATA):
+            if idx < 0 or idx >= len(metadata):
                 continue
-            meta = METADATA[idx]
+            meta = metadata[idx]
             if candidate_id and meta["candidate_id"] != candidate_id:
                 continue
             results.append({
