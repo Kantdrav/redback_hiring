@@ -11,6 +11,7 @@ UPLOAD_FOLDER = BASE_DIR / "uploads" / "resumes"
 UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
 
 class Config:
+    
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
     
     # Priority: DATABASE_URL (Render Postgres) > explicit MySQL > SQLite
