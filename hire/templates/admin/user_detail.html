@@ -86,6 +86,22 @@
                             <th>Status:</th>
                             <td>{{ candidate.status or 'active' }}</td>
                         </tr>
+                        <tr>
+                            <th>Resume:</th>
+                            <td>
+                                {% if candidate.resume_path %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle"></i> Uploaded
+                                    </span>
+                                    <a href="{{ url_for('candidate.download_resume', candidate_id=candidate.id) }}" 
+                                       class="btn btn-sm btn-primary ms-2">
+                                        <i class="fas fa-download"></i> Download Resume
+                                    </a>
+                                {% else %}
+                                    <span class="badge bg-warning">Not uploaded</span>
+                                {% endif %}
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>

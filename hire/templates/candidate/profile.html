@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">My Profile</h2>
+                <a href="{{ url_for('candidate.dashboard') }}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Profile Information -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Profile Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small">Name</label>
+                        <div class="h6">{{ candidate.name or current_user.name or 'N/A' }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Email</label>
+                        <div class="h6">{{ candidate.email or current_user.email }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Phone</label>
+                        <div class="h6">{{ candidate.phone or 'Not provided' }}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Experience Years</label>
+                        <div class="h6">{{ candidate.experience_years or 0 }} years</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Experience Level</label>
+                        <div>
+                            <span class="badge bg-info">{{ candidate.get_experience_level().title() }}</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small">Status</label>
+                        <div>
+                            {% if candidate.status == 'applied' %}
+                                <span class="badge bg-primary">Applied</span>
+                            {% elif candidate.status == 'in_progress' %}
+                                <span class="badge bg-warning">In Progress</span>
+                            {% elif candidate.status == 'rejected' %}
+                                <span class="badge bg-danger">Rejected</span>
+                            {% elif candidate.status == 'hired' %}
+                                <span class="badge bg-success">Hired</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ candidate.status or 'N/A' }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resume Section -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Resume</h5>
+                </div>
+                <div class="card-body">
+                    {% if candidate.resume_path %}
+                        <div class="alert alert-success mb-4">
+                            <i class="fas fa-check-circle"></i> Resume uploaded successfully
+                        </div>
+                        
+                        <!-- Resume File Info -->
+                        <div class="mb-4 p-4" style="background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #28a745;">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-pdf fa-3x text-danger me-3"></i>
+                                <div>
+                                    <h5 class="mb-1">{{ candidate.resume_path.split('/')[-1] }}</h5>
+                                    <small class="text-muted">
+                                        Uploaded: {{ candidate.created_at.strftime('%B %d, %Y at %I:%M %p') if candidate.created_at else 'N/A' }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Download Buttons -->
+                        <div class="d-flex gap-2 mb-3">
+                            <a href="{{ url_for('candidate.download_resume', candidate_id=candidate.id) }}" class="btn btn-success btn-lg">
+                                <i class="fas fa-download"></i> Download Resume
+                            </a>
+                            <a href="{{ url_for('rag.upload_resume') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-cloud-upload-alt"></i> Update Resume
+                            </a>
+                        </div>
+                        
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle"></i> Click "Download Resume" to view or save your resume file
+                        </small>
+                    {% else %}
+                        <div class="alert alert-warning mb-3">
+                            <i class="fas fa-exclamation-triangle"></i> No resume uploaded yet
+                        </div>
+                        <p class="text-muted mb-3">
+                            Upload your resume to complete your profile and apply for jobs.
+                        </p>
+                        <a href="{{ url_for('rag.upload_resume') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-cloud-upload-alt"></i> Upload Resume
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function loadPdfPreview(iframe, resumePath) {
+    // For security, we'll just provide the download link instead of embedding
+    // If you want to use a PDF viewer library, you can use PDF.js
+    // This is a simple placeholder function
+}
+</script>
+
+<style>
+    .card {
+        border: none;
+        margin-bottom: 20px;
+    }
+    
+    .card-header {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 1.25rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+</style>
+{% endblock %}

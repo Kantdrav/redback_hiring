@@ -268,5 +268,467 @@
     "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
     "section": "other",
     "indexed_at": "2026-01-09T11:18:41.456577"
+  },
+  {
+    "candidate_id": 14,
+    "chunk_id": "14_39",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2026-01-12T08:53:42.629001"
+  },
+  {
+    "candidate_id": 14,
+    "chunk_id": "14_40",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T08:53:42.629017"
+  },
+  {
+    "candidate_id": 14,
+    "chunk_id": "14_41",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T08:53:42.629025"
+  },
+  {
+    "candidate_id": 14,
+    "chunk_id": "14_42",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-12T08:53:42.629031"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_43",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T08:54:44.761336"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_44",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T08:54:44.761349"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_45",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T08:54:44.761355"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_46",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T08:54:44.761361"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_47",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T08:54:44.761366"
+  },
+  {
+    "candidate_id": 15,
+    "chunk_id": "15_48",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T08:54:44.761370"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_49",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T08:57:00.111777"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_50",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T08:57:00.111794"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_51",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T08:57:00.111801"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_52",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T08:57:00.111807"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_53",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T08:57:00.111812"
+  },
+  {
+    "candidate_id": 16,
+    "chunk_id": "16_54",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T08:57:00.111817"
+  },
+  {
+    "candidate_id": 17,
+    "chunk_id": "17_55",
+    "text": "Profile\nSoftware Development Engineer (SDE) Intern candidate with strong foundations\nin Data Structures & Algorithms (DSA), backend engineering, and full -stack\n",
+    "section": "summary",
+    "indexed_at": "2026-01-12T08:59:37.843523"
+  },
+  {
+    "candidate_id": 17,
+    "chunk_id": "17_56",
+    "text": "development. Experienced in building production-grade systems, LLM-based\ntools, and scalable microservices. Skilled in Python, JavaScript, FastAPI/Flask, and\nmodern development workflows. Eager to contribute to real-world engineering\nExperience\n• Data Analyst Intern – Infotech (2024, Remote)\n- Conducted market & user research. - Automated data cleaning workflows using Python + SQL. • Vocational Trainee – Team Project (2023)\n- Assisted in documentation, planning, and implementation. Additional Information\n• Strong fundamentals in DSA; proficient in Python/Java/JavaScript\n• Available for full -time 6-month remote internship\n\n• Leadership: Deputy Secretary, Sundarbans House\n• Sports: Cricket — teamwork & strategic thinking\n",
+    "section": "experience",
+    "indexed_at": "2026-01-12T08:59:37.843537"
+  },
+  {
+    "candidate_id": 17,
+    "chunk_id": "17_57",
+    "text": "Education\n• 2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n• 2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n• 2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T08:59:37.843543"
+  },
+  {
+    "candidate_id": 17,
+    "chunk_id": "17_58",
+    "text": "Technical Skills\nLanguages: Python, JavaScript, TypeScript, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, CI/CD basics, Azure, Vercel\nOther: Shell scripting, Excel, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T08:59:37.843548"
+  },
+  {
+    "candidate_id": 17,
+    "chunk_id": "17_59",
+    "text": "projects at Springworks. Selected Projects\n• Quiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\n- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n- Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project\nTechnologies: Python • SQL • pandas\n- Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\n- Designed lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-12T08:59:37.843553"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_60",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:02:17.809697"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_61",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:02:17.809711"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_62",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:02:17.809717"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_63",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:02:17.809723"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_64",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:02:17.809727"
+  },
+  {
+    "candidate_id": 18,
+    "chunk_id": "18_65",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:02:17.809734"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_66",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:02:51.997392"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_67",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:02:51.997409"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_68",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:02:51.997416"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_69",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:02:51.997422"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_70",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:02:51.997427"
+  },
+  {
+    "candidate_id": 19,
+    "chunk_id": "19_71",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:02:51.997432"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_72",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:03:01.793549"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_73",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:03:01.793562"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_74",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:03:01.793569"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_75",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:03:01.793574"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_76",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:03:01.793579"
+  },
+  {
+    "candidate_id": 20,
+    "chunk_id": "20_77",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:03:01.793586"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_78",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:03:41.649235"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_79",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:03:41.649249"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_80",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:03:41.649255"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_81",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:03:41.649260"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_82",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:03:41.649265"
+  },
+  {
+    "candidate_id": 21,
+    "chunk_id": "21_83",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:03:41.649270"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_84",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:04:37.385457"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_85",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:04:37.385470"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_86",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:04:37.385476"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_87",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:04:37.385482"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_88",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:04:37.385487"
+  },
+  {
+    "candidate_id": 22,
+    "chunk_id": "22_89",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:04:37.385492"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_90",
+    "text": "LinkedIn: linkedin.com/in/yourprofile (optional)🔗\nPROFESSIONAL SUMMARY\nDedicated and compassionate Clinical Psychology student at Apollo University, with a strong\nresearch. Passionate about understanding human behavior, providing evidence-based psychological\nsupport, and contributing to mental well-being through ethical and empathetic practice. CAREER OBJECTIVE\nTo gain practical clinical exposure and advanced training in psychology, and to develop into a\ncompetent and ethical clinical psychologist dedicated to improving mental health and quality of life. ",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:06:32.598000"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_91",
+    "text": "academic foundation in psychological assessment, counseling techniques, and mental health\nEDUCATION\nBachelor’s / Master’s in Clinical Psychology\nApollo University\nCurrently Pursuing\nRelevant Coursework:\n•Abnormal Psychology\n•Psychological Assessment\n•Counseling Psychology\n•Cognitive Behavioral Therapy (CBT)\n•Research Methods in Psychology\n•Psychopathology\nCLINICAL & ACADEMIC SKILLS\n•Psychological Assessment & Case History Taking\n•Mental Status Examination (MSE)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:06:32.598015"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_92",
+    "text": "•Basic Counseling & Interviewing Skills\n•Behavioral Observation & Analysis\n•Report Writing & Documentation\n•Research & Data Interpretation\n\n•Ethical Practice & Confidentiality\nTOOLS & TECHNIQUES\n•DSM-5 (Basic Familiarity)\n•Psychological Testing (Theory & Application)\n•CBT (Introductory Level)\n•SPSS / MS Excel (Basic)\n•Case Study Analysis\nINTERNSHIPS / PRACTICAL TRAINING  (if applicable)\nClinical Psychology Trainee\nHospital / Clinic / Counseling Center\n•Assisted in psychological assessments under supervision\n•Observed therapy sessions and clinical interviews\n•Maintained case notes and patient records\n•Participated in mental health awareness activities\nSOFT SKILLS\n•Empathy & Active Listening\n•Strong Communication Skills\n•Emotional Intelligence\n•Critical Thinking\n•Team Collaboration\n•Time Management\n\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:06:32.598023"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_93",
+    "text": "PROJECTS / SEMINARS\n•Case study analysis on mood and anxiety disorders\n•Seminar presentation on stress management and coping strategies\n•Research review on depression and therapeutic interventions\n",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:06:32.598030"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_94",
+    "text": "CERTIFICATIONS  (Optional)\n•Mental Health First Aid (if any)\n•Counseling / Psychology Workshops\n•Online Courses in Psychology\nLANGUAGES\n•English\n•Tamil / Hindi / Other (as applicable)\n",
+    "section": "certifications",
+    "indexed_at": "2026-01-12T09:06:32.598036"
+  },
+  {
+    "candidate_id": 23,
+    "chunk_id": "23_95",
+    "text": "ANGELINE GIFTY JOY\nClinical Psychology Student\nIndia📍\nyour.email@example.com |  +91-XXXXXXXXXX📧 📞\n",
+    "section": "other",
+    "indexed_at": "2026-01-12T09:06:32.598041"
+  },
+  {
+    "candidate_id": 24,
+    "chunk_id": "24_96",
+    "text": "Profile\nSoftware Development Engineer (SDE) Intern candidate with strong foundations\nin Data Structures & Algorithms (DSA), backend engineering, and full -stack\n",
+    "section": "summary",
+    "indexed_at": "2026-01-12T09:09:08.905325"
+  },
+  {
+    "candidate_id": 24,
+    "chunk_id": "24_97",
+    "text": "development. Experienced in building production-grade systems, LLM-based\ntools, and scalable microservices. Skilled in Python, JavaScript, FastAPI/Flask, and\nmodern development workflows. Eager to contribute to real-world engineering\nExperience\n• Data Analyst Intern – Infotech (2024, Remote)\n- Conducted market & user research. - Automated data cleaning workflows using Python + SQL. • Vocational Trainee – Team Project (2023)\n- Assisted in documentation, planning, and implementation. Additional Information\n• Strong fundamentals in DSA; proficient in Python/Java/JavaScript\n• Available for full -time 6-month remote internship\n\n• Leadership: Deputy Secretary, Sundarbans House\n• Sports: Cricket — teamwork & strategic thinking\n",
+    "section": "experience",
+    "indexed_at": "2026-01-12T09:09:08.905338"
+  },
+  {
+    "candidate_id": 24,
+    "chunk_id": "24_98",
+    "text": "Education\n• 2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n• 2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n• 2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:09:08.905344"
+  },
+  {
+    "candidate_id": 24,
+    "chunk_id": "24_99",
+    "text": "Technical Skills\nLanguages: Python, JavaScript, TypeScript, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, CI/CD basics, Azure, Vercel\nOther: Shell scripting, Excel, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:09:08.905349"
+  },
+  {
+    "candidate_id": 24,
+    "chunk_id": "24_100",
+    "text": "projects at Springworks. Selected Projects\n• Quiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\n- Built a scalable platform with JWT authentication and RBAC. - Implemented Redis + Celery for reminders, reports, and CSV exports. - Optimized performance with caching & async tasks. • RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n- Built retrieval-augmented generation (RAG) pipelines. - Implemented embeddings, vector indexing, and semantic search. • Tools in Data Science Project\nTechnologies: Python • SQL • pandas\n- Automated ETL, analysis, and dashboards (Score: 80/100). • Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\n- Designed lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:09:08.905355"
+  },
+  {
+    "candidate_id": 25,
+    "chunk_id": "25_101",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2026-01-12T09:11:00.940885"
+  },
+  {
+    "candidate_id": 25,
+    "chunk_id": "25_102",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-12T09:11:00.940899"
+  },
+  {
+    "candidate_id": 25,
+    "chunk_id": "25_103",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-12T09:11:00.940905"
+  },
+  {
+    "candidate_id": 25,
+    "chunk_id": "25_104",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-12T09:11:00.940911"
   }
 ]

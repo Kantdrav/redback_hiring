@@ -1,5 +1,5 @@
 """Candidate Dashboard - Apply for jobs, view interviews, take tests, see results"""
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
 from flask_login import login_required, current_user
 from utils.rbac import role_required
 from models import (
@@ -8,6 +8,7 @@ from models import (
 )
 from datetime import datetime
 import json
+import os
 
 candidate_bp = Blueprint("candidate", __name__, template_folder="../templates/candidate")
 
@@ -131,6 +132,15 @@ def apply_for_job(job_id):
     return redirect(url_for("candidate.job_board"))
 
 
+@candidate_bp.route("/profile")
+@login_required
+@role_required("candidate")
+def profile():
+    """View candidate profile with resume"""
+    candidate = get_or_create_candidate()
+    return render_template("candidate/profile.html", candidate=candidate)
+
+
 @candidate_bp.route("/my-applications")
 @login_required
 @role_required("candidate")
@@ -138,6 +148,31 @@ def my_applications():
     """View my job applications"""
     applications = Candidate.query.filter_by(user_id=current_user.id).all()
     return render_template("candidate/my_applications.html", applications=applications)
+
+
+@candidate_bp.route("/resume/download/<int:candidate_id>")
+@login_required
+def download_resume(candidate_id):
+    """Download candidate resume - accessible by candidate (own), HR, and Admin"""
+    candidate = Candidate.query.get_or_404(candidate_id)
+    
+    # Verify authorization - candidate can download own resume, admin/hr can download any
+    user_id = getattr(current_user, 'id', None)
+    if user_id:
+        user_id = int(user_id)  # Ensure it's an integer
+    
+    user_role = getattr(current_user, 'role', None)
+    
+    # Allow if: admin, hr, or candidate viewing their own resume
+    if not (user_role in ['admin', 'hr'] or candidate.user_id == user_id):
+        flash("You don't have permission to download this resume", "danger")
+        return redirect(url_for("candidate.profile") if user_role == 'candidate' else url_for("hr_jobs.list_candidates"))
+    
+    if not candidate.resume_path or not os.path.exists(candidate.resume_path):
+        flash("Resume not found", "danger")
+        return redirect(url_for("candidate.profile") if user_role == 'candidate' else url_for("hr_jobs.list_candidates"))
+    
+    return send_file(candidate.resume_path, as_attachment=True)
 
 
 # ==================== INTERVIEW SCHEDULES ====================
@@ -369,9 +404,18 @@ def view_interview_outcome(schedule_id):
 # ==================== HELPER FUNCTIONS ====================
 def get_or_create_candidate():
     """Get or create candidate profile for current user"""
-    candidate = Candidate.query.filter_by(user_id=current_user.id).first()
+    # Prioritize candidate with resume, otherwise get any candidate, or create new one
+    candidate = Candidate.query.filter_by(user_id=current_user.id)\
+        .filter(Candidate.resume_path != None)\
+        .filter(Candidate.resume_path != '')\
+        .first()
     
     if not candidate:
+        # Get any candidate record for this user
+        candidate = Candidate.query.filter_by(user_id=current_user.id).first()
+    
+    if not candidate:
+        # Create new candidate if none exists
         candidate = Candidate(
             user_id=current_user.id,
             name=getattr(current_user, "name", current_user.email),

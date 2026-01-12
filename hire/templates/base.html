@@ -59,6 +59,11 @@
             {% endif %}
             {% if current_user.role == 'candidate' %}
             <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('candidate.profile') }}">
+                <i class="fas fa-user-circle"></i> My Profile
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{{ url_for('candidate.view_interviews') }}">
                 <i class="fas fa-calendar-check"></i> Interviews
               </a>

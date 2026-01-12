@@ -8,11 +8,28 @@
             <small class="text-muted">Track your applications and interviews</small>
         </div>
         <div class="btn-group" role="group">
+            <a href="{{ url_for('candidate.profile') }}" class="btn btn-warning">My Profile</a>
             <a href="{{ url_for('candidate.job_board') }}" class="btn btn-primary">Job Board</a>
             <a href="{{ url_for('candidate.my_applications') }}" class="btn btn-outline-primary">My Applications</a>
             <a href="{{ url_for('candidate.view_interviews') }}" class="btn btn-outline-primary">Interviews</a>
         </div>
     </div>
+
+    <!-- Resume Status Alert -->
+    {% if not candidate.resume_path %}
+        <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Complete Your Profile!</strong> Upload your resume to improve your chances of getting selected.
+            <a href="{{ url_for('rag.upload_resume') }}" class="btn btn-sm btn-warning ms-2">Upload Resume</a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% else %}
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="fas fa-check-circle"></i>
+            <strong>Profile Complete!</strong> Your resume is uploaded. View it in <a href="{{ url_for('candidate.profile') }}">My Profile</a>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
 
     <div class="row g-3 mb-4">
         <div class="col-md-3">
