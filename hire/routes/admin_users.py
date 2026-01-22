@@ -2,6 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import login_required, current_user
 from utils.rbac import role_required
 from models import db, User, UserImpersonation, Job, Candidate, Interview, Round
+from models.assessment import Assessment
+from models.hr_models import InterviewPlan, InterviewSchedule, CandidateTestResult
+from models.admin_models import (QuestionBank, QuestionBankItem, ScoringPolicy, 
+                                  RoundTemplate, WebsiteVisit)
 from datetime import datetime
 import json
 
@@ -54,9 +58,101 @@ def edit_user(user_id):
 @role_required("admin")
 def delete_user(user_id):
     u = User.query.get_or_404(user_id)
-    db.session.delete(u)
-    db.session.commit()
-    flash("User deleted", "info")
+    
+    # Prevent self-deletion
+    if u.id == current_user.id:
+        flash("Cannot delete your own account", "danger")
+        return redirect(url_for("admin_users.list_users"))
+    
+    try:
+        # Delete related records based on user role
+        
+        # 1. Delete impersonation logs where user is admin or target
+        UserImpersonation.query.filter(
+            (UserImpersonation.admin_id == user_id) | 
+            (UserImpersonation.target_user_id == user_id)
+        ).delete(synchronize_session=False)
+        
+        # 2. Delete website visits by this user
+        WebsiteVisit.query.filter_by(user_id=user_id).delete(synchronize_session=False)
+        
+        # 3. If user is a candidate, delete their candidate profile and applications
+        candidate_profiles = Candidate.query.filter_by(user_id=user_id).all()
+        for candidate in candidate_profiles:
+            # Delete interview schedules for this candidate
+            schedules = InterviewSchedule.query.filter_by(candidate_id=candidate.id).all()
+            for schedule in schedules:
+                # Delete test results for this schedule
+                CandidateTestResult.query.filter_by(interview_schedule_id=schedule.id).delete(synchronize_session=False)
+                db.session.delete(schedule)
+            
+            # Delete interviews for this candidate
+            cand_interviews = Interview.query.filter_by(candidate_id=candidate.id).all()
+            for interview in cand_interviews:
+                Assessment.query.filter_by(interview_id=interview.id).delete(synchronize_session=False)
+                db.session.delete(interview)
+            
+            # Delete the candidate profile
+            db.session.delete(candidate)
+        
+        # 4. If user is an interviewer, handle interviews they conducted
+        interviews_by_user = Interview.query.filter_by(interviewer_id=user_id).all()
+        for interview in interviews_by_user:
+            # Delete assessments for these interviews
+            Assessment.query.filter_by(interview_id=interview.id).delete(synchronize_session=False)
+            # Set interviewer to NULL or delete interview (we'll set to NULL)
+            interview.interviewer_id = None
+        
+        # 5. If user created jobs (HR), handle job-related data
+        jobs = Job.query.filter_by(created_by=user_id).all()
+        for job in jobs:
+            # Delete interview plans for this job
+            plans = InterviewPlan.query.filter_by(job_id=job.id).all()
+            for plan in plans:
+                # Delete schedules using this plan
+                schedules = InterviewSchedule.query.filter_by(interview_plan_id=plan.id).all()
+                for schedule in schedules:
+                    CandidateTestResult.query.filter_by(interview_schedule_id=schedule.id).delete(synchronize_session=False)
+                    db.session.delete(schedule)
+                db.session.delete(plan)
+            
+            # Delete candidates who applied to these jobs
+            candidates = Candidate.query.filter_by(applied_job_id=job.id).all()
+            for candidate in candidates:
+                # Delete schedules for this candidate
+                schedules = InterviewSchedule.query.filter_by(candidate_id=candidate.id).all()
+                for schedule in schedules:
+                    CandidateTestResult.query.filter_by(interview_schedule_id=schedule.id).delete(synchronize_session=False)
+                    db.session.delete(schedule)
+                
+                # Delete interviews for these candidates
+                cand_interviews = Interview.query.filter_by(candidate_id=candidate.id).all()
+                for cand_interview in cand_interviews:
+                    Assessment.query.filter_by(interview_id=cand_interview.id).delete(synchronize_session=False)
+                    db.session.delete(cand_interview)
+                db.session.delete(candidate)
+            
+            # Delete the job itself
+            db.session.delete(job)
+        
+        # 6. Delete admin-created resources
+        QuestionBank.query.filter_by(created_by=user_id).delete(synchronize_session=False)
+        ScoringPolicy.query.filter_by(created_by=user_id).delete(synchronize_session=False)
+        RoundTemplate.query.filter_by(created_by=user_id).delete(synchronize_session=False)
+        
+        # 7. Delete assessments submitted by user
+        Assessment.query.filter_by(submitted_by=user_id).delete(synchronize_session=False)
+        
+        # Finally, delete the user
+        db.session.delete(u)
+        db.session.commit()
+        
+        flash(f"User '{u.name}' and all related records deleted successfully", "success")
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error deleting user: {str(e)}", "danger")
+    
     return redirect(url_for("admin_users.list_users"))
 
 

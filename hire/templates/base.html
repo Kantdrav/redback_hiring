@@ -37,8 +37,8 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.dashboard') }}">Overview</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_candidates') }}">Candidates</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_jobs') }}">Jobs</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_candidates') }}"><i class="fas fa-users"></i> View Candidates</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('hr_jobs.list_interview_plans') }}">Interview Plans</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{ url_for('interviews.list_quizzes') }}">Quiz Management</a></li>

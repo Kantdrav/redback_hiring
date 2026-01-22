@@ -19,8 +19,10 @@
                     <th>Email</th>
                     <th>Applied For</th>
                     <th>Experience</th>
+                    <th>Match Score</th>
                     <th>Status</th>
                     <th>Applied On</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,9 +39,32 @@
                     </td>
                     <td>{{ candidate.experience_years }} years</td>
                     <td>
+                        {% if candidate.match_score > 0 %}
+                            <span class="badge bg-success">{{ candidate.match_score }}%</span>
+                        {% else %}
+                            <span class="text-muted">-</span>
+                        {% endif %}
+                    </td>
+                    <td>
                         <span class="badge bg-info">{{ candidate.status or 'active' }}</span>
                     </td>
                     <td>{{ candidate.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% if candidate.resume_path %}
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('candidate.download_resume', candidate_id=candidate.id) }}" 
+                                   class="btn btn-sm btn-success" title="Download Resume">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                <a href="{{ url_for('rag.view_report', candidate_id=candidate.id) }}" 
+                                   class="btn btn-sm btn-info" title="View Analysis">
+                                    <i class="fas fa-file-alt"></i> View
+                                </a>
+                            </div>
+                        {% else %}
+                            <span class="text-muted">No resume</span>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

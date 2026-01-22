@@ -153,18 +153,18 @@ def my_applications():
 @candidate_bp.route("/resume/download/<int:candidate_id>")
 @login_required
 def download_resume(candidate_id):
-    """Download candidate resume - accessible by candidate (own), HR, and Admin"""
+    """Download candidate resume - accessible by candidate (own), HR, Interviewer, and Admin"""
     candidate = Candidate.query.get_or_404(candidate_id)
     
-    # Verify authorization - candidate can download own resume, admin/hr can download any
+    # Verify authorization - candidate can download own resume, admin/hr/interviewer can download any
     user_id = getattr(current_user, 'id', None)
     if user_id:
         user_id = int(user_id)  # Ensure it's an integer
     
     user_role = getattr(current_user, 'role', None)
     
-    # Allow if: admin, hr, or candidate viewing their own resume
-    if not (user_role in ['admin', 'hr'] or candidate.user_id == user_id):
+    # Allow if: admin, hr, interviewer, or candidate viewing their own resume
+    if not (user_role in ['admin', 'hr', 'interviewer'] or candidate.user_id == user_id):
         flash("You don't have permission to download this resume", "danger")
         return redirect(url_for("candidate.profile") if user_role == 'candidate' else url_for("hr_jobs.list_candidates"))
     

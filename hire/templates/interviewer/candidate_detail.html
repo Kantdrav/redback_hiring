@@ -108,10 +108,15 @@
                     <h5 class="mb-0">Resume</h5>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted small mb-3">{{ candidate.resume_path }}</p>
-                    <a href="/" class="btn btn-sm btn-primary w-100">
-                        View Resume
-                    </a>
+                    <p class="text-muted small mb-3"><i class="bi bi-file-earmark-pdf"></i> Resume Available</p>
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('candidate.download_resume', candidate_id=candidate.id) }}" class="btn btn-sm btn-primary">
+                            <i class="bi bi-download"></i> Download Resume
+                        </a>
+                        <a href="{{ url_for('rag.view_report', candidate_id=candidate.id) }}" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i> View Resume Analysis
+                        </a>
+                    </div>
                 </div>
             </div>
             {% endif %}

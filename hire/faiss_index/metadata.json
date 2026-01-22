@@ -730,5 +730,61 @@
     "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
     "section": "projects",
     "indexed_at": "2026-01-12T09:11:00.940911"
+  },
+  {
+    "candidate_id": 27,
+    "chunk_id": "27_105",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2026-01-21T10:41:59.987085"
+  },
+  {
+    "candidate_id": 27,
+    "chunk_id": "27_106",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-21T10:41:59.987099"
+  },
+  {
+    "candidate_id": 27,
+    "chunk_id": "27_107",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-21T10:41:59.987103"
+  },
+  {
+    "candidate_id": 27,
+    "chunk_id": "27_108",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-21T10:41:59.987107"
+  },
+  {
+    "candidate_id": 28,
+    "chunk_id": "28_109",
+    "text": "AI/ML Engineer and Full-Stack Developer with hands-on experience in LLM\nprototyping, Retrieval-Augmented Generation (RAG), automation workflows,\nbackend engineering, and end-to-end data pipelines. Skilled in Python,\nFastAPI/Flask, microservices, Redis, Celery, and front-end tools. Experience\nData Analyst Intern – Infotech (2024, Remote)\nConducted market and user research. Automated data cleaning using Python + SQL. Vocational Trainee – Team Project (2023)\nAssisted in documentation, planning, and implementation. Extracurricular\nLeadership: Deputy Secretary, Sundarbans House\nSports: Cricket — teamwork and strategic thinking\nAdditional Information\nAvailable for Internship; can convert to full-time. ",
+    "section": "experience",
+    "indexed_at": "2026-01-21T10:46:55.017969"
+  },
+  {
+    "candidate_id": 28,
+    "chunk_id": "28_110",
+    "text": "Education\n2021–Present: B.S. in Data Science & Applications – IIT Madras (CGPA: 7.3)\n2019–2021: Higher Secondary – Don Bosco Academy, Patna (82%)\n2019: Secondary School – Gems English School, Rohtas (85%)\n",
+    "section": "education",
+    "indexed_at": "2026-01-21T10:46:55.017985"
+  },
+  {
+    "candidate_id": 28,
+    "chunk_id": "28_111",
+    "text": "Technical Skills\nLanguages: JavaScript, TypeScript, Python, Java, SQL\nFrontend: React.js, Vue.js, Next.js (basics)\nBackend: FastAPI, Flask, Node.js, REST APIs, JWT, RBAC, Microservices\nDatabases: SQLite, MySQL, Redis\nAI / ML: LLMs, RAG, LangChain, OpenAI API, scikit-learn, pandas, NumPy,\nFAISS/Chroma\nDevOps: Git, Docker, Azure, Vercel, CI/CD basics\nOther: Excel, Shell scripting, Basic unit testing\n",
+    "section": "skills",
+    "indexed_at": "2026-01-21T10:46:55.017993"
+  },
+  {
+    "candidate_id": 28,
+    "chunk_id": "28_112",
+    "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
+    "section": "projects",
+    "indexed_at": "2026-01-21T10:46:55.017999"
   }
 ]

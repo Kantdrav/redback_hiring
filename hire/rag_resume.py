@@ -180,9 +180,9 @@ def index_resume_candidate(candidate_id: int, file_path: str):
 def view_report(candidate_id):
     cand = Candidate.query.get_or_404(candidate_id)
     
-    # Authorization: allow candidate owner or admin/hr roles to view report
+    # Authorization: allow candidate owner or admin/hr/interviewer roles to view report
     user_role = getattr(current_user, "role", None)
-    if not (user_role in ["admin", "hr"] or cand.user_id == current_user.id):
+    if not (user_role in ["admin", "hr", "interviewer"] or cand.user_id == current_user.id):
         flash("You don't have permission to view this resume report", "danger")
         return redirect(url_for("candidate.dashboard"))
     
@@ -199,9 +199,9 @@ def view_report(candidate_id):
 @login_required
 def download_resume(candidate_id):
     cand = Candidate.query.get_or_404(candidate_id)
-    # Authorization: allow owner candidate or admin/hr roles
+    # Authorization: allow owner candidate or admin/hr/interviewer roles
     user_role = getattr(current_user, "role", None)
-    if not (user_role in ["admin", "hr"] or cand.user_id == current_user.id):
+    if not (user_role in ["admin", "hr", "interviewer"] or cand.user_id == current_user.id):
         flash("You don't have permission to download this resume", "danger")
         return redirect(url_for("rag.view_report", candidate_id=candidate_id))
 

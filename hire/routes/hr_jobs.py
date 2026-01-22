@@ -15,7 +15,7 @@ hr_jobs_bp = Blueprint("hr_jobs", __name__, template_folder="../templates/hr")
 # ==================== HR DASHBOARD MAIN ====================
 @hr_jobs_bp.route("/dashboard")
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def dashboard():
     """Main HR dashboard with overview"""
     open_jobs = Job.query.filter_by(status="open", created_by=current_user.id).count()
@@ -37,7 +37,7 @@ def dashboard():
 # ==================== JOB OPENINGS ====================
 @hr_jobs_bp.route("/jobs")
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def list_jobs():
     """List HR's job openings"""
     jobs = Job.query.filter_by(created_by=current_user.id)\
@@ -108,7 +108,7 @@ def edit_job(job_id):
 # ==================== INTERVIEW PLANS ====================
 @hr_jobs_bp.route("/interview-plans")
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def list_interview_plans():
     """List interview plans"""
     plans = InterviewPlan.query.all()
@@ -117,7 +117,7 @@ def list_interview_plans():
 
 @hr_jobs_bp.route("/interview-plans/create", methods=["GET", "POST"])
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def create_interview_plan():
     """Create new interview plan for a job"""
     if request.method == "POST":
