@@ -786,5 +786,40 @@
     "text": "Selected Projects\nQuiz Master V2 – Full-Stack Exam App\nTechnologies: Flask • Vue.js • SQLite • Redis • Celery\nBuilt a scalable platform with JWT auth and RBAC. Implemented Redis + Celery for reminders, reports, CSV exports. Optimized performance with caching & async tasks. RAG + LLM Engineering – AI Automation Tools\nTechnologies: FastAPI • LangChain • OpenAI\n\nBuilt retrieval-augmented generation (RAG) pipelines. Implemented embeddings, vector indexing, semantic search. Tools in Data Science Project\nTechnologies: Python • SQL • pandas\nAutomated ETL, analysis, dashboards. Score: 80/100. Control Systems Simulations\nTechnologies: MATLAB • Simulink • Python\nDesigned lead/lag compensators, Bode & Nyquist plots. ",
     "section": "projects",
     "indexed_at": "2026-01-21T10:46:55.017999"
+  },
+  {
+    "candidate_id": 29,
+    "chunk_id": "29_113",
+    "text": "Aspiring Full Stack Developer with strong foundation in JavaScript, Python, and SQL . Experienced in\nInternship Experience\nInfotech Remote\nData Analyst Intern 2024\n•Conducted market, user, and competitor research to generate insights and support strategy. •Performed data cleaning, transformation, and analysis using Python, SQL, and Excel. Work Experience\nVocational Trainee Onsite\nTeam Project 2023\n•Deputy Secretary, Sundarbans House – Leadership and coordination experience\n•Cricket – Teamwork, strategy, and discipline\n",
+    "section": "experience",
+    "indexed_at": "2026-01-22T17:52:15.774134"
+  },
+  {
+    "candidate_id": 29,
+    "chunk_id": "29_114",
+    "text": "Education\nB.S. Data Science & Applications CGPA: 7.3\nIndian Institute of Technology, Madras 2021 – Present\nDon Bosco Academy, Patna 82%\nHigher Secondary School 2021\nGems English School, Rohtas 85%\nSecondary School 2019\n",
+    "section": "education",
+    "indexed_at": "2026-01-22T17:52:15.774173"
+  },
+  {
+    "candidate_id": 29,
+    "chunk_id": "29_115",
+    "text": "Technical Skills\n•Languages: JavaScript, TypeScript, Python, Java, SQL\n•Frontend: React.js, Vue.js, Next.js (basic)\n•Backend: Node.js, Flask, REST APIs, Microservices\n•Databases: SQLite, MySQL, Redis\n•AI/ML Tools: OpenAI API, LangChain (basic), Scikit-learn\n•DevOps & Tools: Git, Docker, Vercel, CI/CD basics\n",
+    "section": "skills",
+    "indexed_at": "2026-01-22T17:52:15.774188"
+  },
+  {
+    "candidate_id": 29,
+    "chunk_id": "29_116",
+    "text": "building end-to-end web applications , integrating APIs, and collaborating on team projects. Curious and\nself-driven with interest in AI/LLM technologies, prompt engineering, and scalable system design . Seeking to contribute to cutting-edge solutions at Trovex.ai. Projects\n•Quiz Master – V2 (Multi-User Exam Prep App) : Developed a full-stack platform using Flask\n(API), SQLite (DB), Vue.js (UI), and Redis & Celery (batch jobs). Implemented token-based authenti-\ncation , role-based access control, and real-time progress tracking. •Tools in Data Science Project : Built an end-to-end data analysis workflow with Python (pandas,\nNumPy), SQL, and visualization libraries. Extracted insights and presented results. (Scored 80/100)\n•LLM Prompt Engineering Experiments : Explored OpenAI GPT API for building conversational\nmodules . Implemented simple RAG-based prototypes using Python and LangChain. •Collaborated on team-based technical projects, focusing on problem-solving and documentation. Extracurricular Activities\n",
+    "section": "projects",
+    "indexed_at": "2026-01-22T17:52:15.774199"
+  },
+  {
+    "candidate_id": 29,
+    "chunk_id": "29_117",
+    "text": "Ravi Kant\nAhmedabad, India — 21f3002792 — 6299547757\nGitHub: github.com/Kantdrav\n",
+    "section": "other",
+    "indexed_at": "2026-01-22T17:52:15.774211"
   }
 ]
