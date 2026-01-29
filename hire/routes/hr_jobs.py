@@ -47,7 +47,7 @@ def list_jobs():
 
 @hr_jobs_bp.route("/jobs/create", methods=["GET", "POST"])
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def create_job():
     """Create new job opening"""
     if request.method == "POST":
@@ -80,7 +80,7 @@ def create_job():
 
 @hr_jobs_bp.route("/jobs/<int:job_id>/edit", methods=["GET", "POST"])
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def edit_job(job_id):
     """Edit job opening"""
     job = Job.query.get_or_404(job_id)
@@ -150,7 +150,7 @@ def create_interview_plan():
 
 @hr_jobs_bp.route("/interview-plans/<int:plan_id>/edit", methods=["GET", "POST"])
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def edit_interview_plan(plan_id):
     """Edit interview plan and configure rounds"""
     plan = InterviewPlan.query.get_or_404(plan_id)
@@ -179,7 +179,7 @@ def edit_interview_plan(plan_id):
 # ==================== CANDIDATE INVITATIONS & SCHEDULING ====================
 @hr_jobs_bp.route("/candidates")
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def list_candidates():
     """List candidates for job invitations"""
     candidates = Candidate.query.all()
@@ -188,7 +188,7 @@ def list_candidates():
 
 @hr_jobs_bp.route("/interview-schedules")
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def list_interview_schedules():
     """List interview schedules"""
     schedules = InterviewSchedule.query.all()
@@ -197,7 +197,7 @@ def list_interview_schedules():
 
 @hr_jobs_bp.route("/interview-schedules/create", methods=["GET", "POST"])
 @login_required
-@role_required("hr")
+@role_required("admin", "hr")
 def create_interview_schedule():
     """Invite candidate and create interview schedule"""
     if request.method == "POST":
