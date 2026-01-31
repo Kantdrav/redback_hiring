@@ -78,9 +78,22 @@ def upload_resume():
         save_path = Path(current_app.config["UPLOAD_FOLDER"]) / filename
         file.save(save_path)
 
-        # store candidate with current user ID
-        c = Candidate(user_id=current_user.id, name=name, email=email, phone=phone, resume_path=str(save_path), applied_job_id=job_id if job_id else None)
-        db.session.add(c)
+        # Check if candidate already exists for this user
+        c = Candidate.query.filter_by(user_id=current_user.id).first()
+        
+        if c:
+            # Update existing candidate with new resume and job application if provided
+            c.name = name
+            c.email = email
+            c.phone = phone
+            c.resume_path = str(save_path)
+            if job_id:
+                c.applied_job_id = job_id
+        else:
+            # Create new candidate only if none exists for this user
+            c = Candidate(user_id=current_user.id, name=name, email=email, phone=phone, resume_path=str(save_path), applied_job_id=job_id if job_id else None)
+            db.session.add(c)
+        
         db.session.commit()
 
         # index resume asynchronously ideally; demo: immediate
