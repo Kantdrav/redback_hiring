@@ -115,16 +115,30 @@ def apply_for_job(job_id):
         flash("You have already applied for this job", "warning")
         return redirect(url_for("candidate.job_board"))
     
-    # Create application
-    candidate = Candidate(
+    # Reuse existing profile-only candidate if available to avoid duplicates
+    profile_candidate = Candidate.query.filter_by(
         user_id=current_user.id,
-        name=getattr(current_user, "name", current_user.email),
-        email=current_user.email,
-        phone=getattr(current_user, "phone", None),
-        applied_job_id=job_id,
-        status="applied"
-    )
-    db.session.add(candidate)
+        applied_job_id=None
+    ).first()
+    
+    if profile_candidate:
+        profile_candidate.name = getattr(current_user, "name", profile_candidate.name or current_user.email)
+        profile_candidate.email = current_user.email
+        profile_candidate.phone = getattr(current_user, "phone", profile_candidate.phone)
+        profile_candidate.applied_job_id = job_id
+        profile_candidate.status = "applied"
+        candidate = profile_candidate
+    else:
+        # Create a new application record (supports multiple job applications)
+        candidate = Candidate(
+            user_id=current_user.id,
+            name=getattr(current_user, "name", current_user.email),
+            email=current_user.email,
+            phone=getattr(current_user, "phone", None),
+            applied_job_id=job_id,
+            status="applied"
+        )
+        db.session.add(candidate)
     db.session.commit()
     
     log_candidate_action("apply", "job", job_id, current_user.id, {"job_title": job.title})
